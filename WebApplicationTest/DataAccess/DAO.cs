@@ -55,16 +55,21 @@ namespace WebApplicationTest.DataAccess
 
         public static bool AddMovement(Movement movement)
         {
-            Int32 commonCount = GetAllCount(movement.GoodId);
-            if (String.Equals(movement.Type, CONSUMPTION) && commonCount < movement.Amount)
-                return false;
-            using (GoodsContext context = new GoodsContext())
+            //TODO: remove null cheking after fixing validation
+            if (movement != null)
             {
-                context.Set<Movement>().Add(movement);
-                context.SaveChanges();
-                var all = context.Set<Movement>().ToList<Movement>();
+                Int32 commonCount = GetAllCount(movement.GoodId);
+                if (String.Equals(movement.Type, CONSUMPTION) && commonCount < movement.Amount)
+                    return false;
+                using (GoodsContext context = new GoodsContext())
+                {
+                    context.Set<Movement>().Add(movement);
+                    context.SaveChanges();
+                    var all = context.Set<Movement>().ToList<Movement>();
                     return true;
+                }
             }
+            else return false;
         }
 
         public static List<Movement> GetMovementsByGoodId(Int32 goodId)

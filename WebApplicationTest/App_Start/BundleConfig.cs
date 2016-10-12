@@ -20,7 +20,7 @@ namespace WebApplicationTest
                 "~/Scripts/jquery.jqGrid.min.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/scripts").Include(
-                "~/Scripts/i18n/scripts.js"));
+                "~/Scripts/scripts.js"));
 
 
             // Use the development version of Modernizr to develop with and learn from. Then, when you're
