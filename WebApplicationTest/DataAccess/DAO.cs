@@ -10,13 +10,14 @@ namespace WebApplicationTest.DataAccess
     {
         private const String COMING = "Coming";
         private const String CONSUMPTION = "Consumption";
+        private const String MOVEMENTS = "Movements";
 
         public static List<Good> GetAllGoods()
         {
             List<Good> goods = new List<Good>();
             using (GoodsContext context = new GoodsContext())
             {
-                goods = context.Goods.Include("Movements").ToList<Good>();
+                goods = context.Goods.Include(MOVEMENTS).ToList<Good>();
             }
             return goods;
         }
@@ -55,7 +56,7 @@ namespace WebApplicationTest.DataAccess
         public static bool AddMovement(Movement movement)
         {
             Int32 commonCount = GetAllCount(movement.GoodId);
-            if (movement.Type == CONSUMPTION && commonCount < movement.Amount)
+            if (String.Equals(movement.Type, CONSUMPTION) && commonCount < movement.Amount)
                 return false;
             using (GoodsContext context = new GoodsContext())
             {
@@ -91,7 +92,7 @@ namespace WebApplicationTest.DataAccess
             Good good = new Good();
             using (GoodsContext context = new GoodsContext())
             {
-                good = context.Set<Good>().Where(x => x.Name == name).FirstOrDefault();
+                good = context.Set<Good>().Where(x => String.Equals(x.Name, name)).FirstOrDefault();
             }
             return good;
         }
@@ -101,7 +102,7 @@ namespace WebApplicationTest.DataAccess
             Int32 result = 0;
             using (GoodsContext context = new GoodsContext())
             {
-                IQueryable<Movement> movements = context.Set<Movement>().Where(x => x.GoodId == goodId && x.Type == COMING);
+                IQueryable<Movement> movements = context.Set<Movement>().Where(x => x.GoodId == goodId && String.Equals(x.Type, COMING));
                 result = movements.Count() == 0 ? 0 : movements.Sum(s => s.Amount);
             }
             return result;
@@ -112,7 +113,7 @@ namespace WebApplicationTest.DataAccess
             Int32 result = 0;
             using (GoodsContext context = new GoodsContext())
             {
-                IQueryable<Movement> movements = context.Set<Movement>().Where(x => x.GoodId == goodId && x.Type == CONSUMPTION);
+                IQueryable<Movement> movements = context.Set<Movement>().Where(x => x.GoodId == goodId && String.Equals(x.Type, CONSUMPTION));
                 result = movements.Count() == 0 ? 0 : movements.Sum(s => s.Amount);
             }
             return result;
@@ -145,7 +146,7 @@ namespace WebApplicationTest.DataAccess
             List<Movement> result = new List<Movement>();
             using (GoodsContext context = new GoodsContext())
             {
-                result = context.Set<Movement>().Where(x => x.GoodId == goodId && x.Type == COMING).ToList<Movement>();
+                result = context.Set<Movement>().Where(x => x.GoodId == goodId && String.Equals(x.Type, COMING)).ToList<Movement>();
             }
             return result;
         }
@@ -155,7 +156,7 @@ namespace WebApplicationTest.DataAccess
             List<Movement> result = new List<Movement>();
             using (GoodsContext context = new GoodsContext())
             {
-                result = context.Set<Movement>().Where(x => x.GoodId == goodId && x.Type == CONSUMPTION).ToList<Movement>();
+                result = context.Set<Movement>().Where(x => x.GoodId == goodId && String.Equals(x.Type, CONSUMPTION)).ToList<Movement>();
             }
             return result;
         }

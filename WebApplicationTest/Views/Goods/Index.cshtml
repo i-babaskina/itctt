@@ -15,7 +15,7 @@
 <button id="editBtn" class="btn btn-warning" onclick="EditRow();">Edit</button>
 <button id="saveBtn" class="btn btn-default" disabled='true' onclick="SaveRow();">Save</button>
 <button id="cancelBtn" class="btn btn-default" disabled='true' onclick="CancelRow();">Cancel</button>
-<button id="deleteBtn" class="btn btn-danger" onclick="DeleteRow();">Delete</button>
+<button id="deleteBtn" class="btn btn-danger" >Delete</button>
 <br />
 <br />
 <table id="goodData" style="display:none;">
@@ -87,6 +87,18 @@
 </div>
 
 
+<div id="dialogDelete" class="dialog-box" title="Dialog Title" style="display:none;">
+    <br />
+    <div>
+        Are you sure you want to delete this good?
+    </div>
+    <br />
+    <div style="text-align:center;">
+        <button class="btn btn-danger" onclick="DeleteGood();">Yes</button>
+        <button class="btn btn-default" id="cancelDelete">No</button>
+    </div>
+</div>
+
 @Scripts.Render("~/bundles/jquery")
 @Scripts.Render("~/bundles/bootstrap")
 @Scripts.Render("~/bundles/jqueryval")
@@ -116,13 +128,24 @@
         title: 'Add movement'
     };
 
-
+    var opt3 = {
+        autoOpen: false,
+        modal: true,
+        width: 350,
+        height: 160,
+        title: 'Delete good?'
+    }
 
 
     $("#opener").click(function ()
 {
         $("#dialog").dialog(opt).dialog("open");
-});
+    });
+
+
+    $("#deleteBtn").click(function () {
+        $("#dialogDelete").dialog(opt3).dialog("open");
+    });
 
 
     $("#showMovement").click(function ()
@@ -343,16 +366,23 @@ url: '@Url.Action("GoodsList", "Goods")',
         $("#saveBtn").removeClass("btn btn-success").addClass("btn btn-default");
     }
     function DeleteRow() {
+        
+    }
+
+
+
+    function DeleteGood() {
         var myGrid = $('#jqList');
         selectedRowId = myGrid.jqGrid('getGridParam', 'selrow');
         $.ajax(
         {
-           url: "@Url.Action("DeleteGood", "Goods")",
+            url: "@Url.Action("DeleteGood", "Goods")",
             type: "POST",
-            data: selectedRowId,
-            success: function (data, textStatus, jqXHR) {
-                $('#goodsTable')./*trigger('reloadGrid').*/setGridParam({ url: '@Url.Action("GoodsList", "Goods")', datatype: 'json'/*, page: 1*/ }).trigger('reloadGrid');
-                $('#refresh_jqList').click();
+        data: selectedRowId,
+        success: function (data, textStatus, jqXHR) {
+            $('#goodsTable')./*trigger('reloadGrid').*/setGridParam({ url: '@Url.Action("GoodsList", "Goods")', datatype: 'json'/*, page: 1*/ }).trigger('reloadGrid');
+            $('#refresh_jqList').click();
+            $("#dialogDelete").dialog(opt3).dialog("close");
         },
         error: function (jqXHR, textStatus, errorThrown) {
             alert(textStatus);
@@ -360,12 +390,8 @@ url: '@Url.Action("GoodsList", "Goods")',
     });
     }
 
-    $("editBtn").click(function () {
-        var myGrid = $('#jqList');
-        selectedRowId = myGrid.jqGrid('getGridParam', 'selrow');
-        alert(selectedRowId);
-        $("#jqList").jqGrid('editRow', selectedRowId);
-        this.disabled = 'true';
-        $("#saveBtn,#cancelBtn").attr("disabled", false);
+    $("#cancelDelete").click(function () {
+        $("#dialogDelete").dialog(opt3).dialog("close");
     });
+
 </script>

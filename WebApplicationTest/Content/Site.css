@@ -30,8 +30,7 @@ textarea {
 
 .ui-jqgrid-bdiv {
     overflow-y: auto;
-    /*width: 500px !important;*/
-    height: 220px !important;
+    /*height: 220px !important;*/
     background-color: linen;
 }
 
@@ -47,28 +46,7 @@ textarea {
     width: 280px;
 }
 
-/*
-.ui-pager-control {
-    width: 500px !important;
-    background-color: lightgray;
-}
-
-.ui-corner-all {
-    width: 510px !important;
-}*/
 
 .ui-jqgrid .ui-jqgrid-pager {
     overflow:visible !important;
 }
-
-/*#jqPager_left {
-    width: 100px !important;
-}*/
-
-/*#jqPager_center {
-    width: 250px !important;
-}
-
-.ui-pg-button ui-corner-all {
-    background-color: lightgray;
-}*/
