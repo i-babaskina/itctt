@@ -1,0 +1,371 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Goods List</h2>
+<br />
+
+<button class="btn btn-success" id="opener">Add new good</button>
+<br />
+<br />
+<table id="jqList"></table>
+<div id="jqPager"></div>
+<button id="editBtn" class="btn btn-warning" onclick="EditRow();">Edit</button>
+<button id="saveBtn" class="btn btn-default" disabled='true' onclick="SaveRow();">Save</button>
+<button id="cancelBtn" class="btn btn-default" disabled='true' onclick="CancelRow();">Cancel</button>
+<button id="deleteBtn" class="btn btn-danger" onclick="DeleteRow();">Delete</button>
+<br />
+<br />
+<table id="goodData" style="display:none;">
+    <tr>
+        <td>Name:</td>
+        <td id="goodName">
+            not selected
+        </td>
+    </tr>
+    <tr>
+        <td>Price:</td>
+        <td id="goodPrice">not selected</td>
+    </tr>
+    <tr>
+        <td>Count:</td>
+        <td id="goodAmount">not selected</td>
+    </tr>
+    <tr>
+        <td>Common Price:</td>
+        <td id="goodAllPrice">not selected</td>
+    </tr>
+</table>
+<button id="showMovement" class="btn btn-info">Good coming/consumption</button>
+
+<div id="dialog" class="dialog-box" title="Dialog Title" style="display:none;">
+    <div class="add-good">
+        <form id="addGoodForm" method="post" action="@Url.Action("AddGood", "Goods")" class="form-horizontal">
+            <div class="form-group">
+                <label for="newGoodName">Name</label>
+                <input type="text" class="form-control" name="Name" id="newGoodName">
+                <span class="field-validation-valid text-danger" data-valmsg-for="Name" data-valmsg-replace="false">test message for name</span>
+            </div>
+            <div class="form-group">
+                <label for="newGoodPrice">Price</label>
+                <input type="text" class="form-control" name="Price" id="newGoodPrice">
+                <span class="field-validation-valid text-danger" data-valmsg-for="Name" data-valmsg-replace="false">test message for name</span>
+            </div>
+            <button type="submit" class="btn btn-success">Add good</button>
+        </form>
+    </div>
+</div>
+
+<div id="movementDialog" class="dialog-box" title="Dialog Title" style="display:none;">
+    <div class="add-good">
+        <div class="alert alert-danger" id="movementFormValidation" role="alert" style="display:none;"></div>
+        <form id="addMovementForm" method="post" action="@Url.Action("AddMovement", "Goods")" class="form-horizontal">
+            <div class="form-group">
+                <label for="movementGoodName">Name</label>
+                <div class="form-control fake-input" name="Name" id="movementGoodName" > </div> 
+                <span class="field-validation-valid text-danger" data-valmsg-for="Name" data-valmsg-replace="false">test message for name</span>
+            </div>
+            <div class="form-group">
+                <label for="newGoodPrice">Type</label>
+                <select class="form-control" id="typeOption" name="Type">
+                    <option value="Coming">Coming</option>
+                    <option value="Consumption">Consumption</option>
+                </select>
+                <span class="field-validation-valid text-danger" data-valmsg-for="Type" data-valmsg-replace="false">test message for name</span>
+            </div>
+            <div class="form-group">
+                <label for="amount">Amount</label>
+                <input type="text" class="form-control" name="Amount" id="amount">
+                <span class="field-validation-valid text-danger" data-valmsg-for="Amount" data-valmsg-replace="false">test message for name</span>
+            </div>
+            <button type="submit" class="btn btn-success">Save</button>
+            <button id="cancelMovement" type="reset" class="btn btn-default">Cancel</button>
+        </form>
+    </div>
+</div>
+
+
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/bootstrap")
+@Scripts.Render("~/bundles/jqueryval")
+@Scripts.Render("~/bundles/jqGrid")
+
+
+<script type = "text/javascript" >
+
+    //$("#dialog").dialog({ autoOpen: false });
+    //$("#opener").click(function () {
+    //    $("#dialog").dialog("open");
+    //});
+
+    var opt = {
+    autoOpen: false,
+        modal: true,
+        width: 350,
+        height: 350,
+        title: 'Add good'
+    };
+
+    var opt2 = {
+        autoOpen: false,
+        modal: true,
+        width: 350,
+        height: 500,
+        title: 'Add movement'
+    };
+
+
+
+
+    $("#opener").click(function ()
+{
+        $("#dialog").dialog(opt).dialog("open");
+});
+
+
+    $("#showMovement").click(function ()
+{
+        $("#movementDialog").dialog(opt2).dialog("open");
+});
+
+    jQuery("#jqList").jqGrid({
+url: '@Url.Action("GoodsList", "Goods")',
+        datatype: "json",
+        loadonce: true,
+	colNames: ['Id', 'Name', 'Price'],
+	colModel: [
+        { name: 'Id', index: 'Id', width: 25, sortable: true, hidden: true, editable: true },
+        { name: 'Name', index: 'Name', width: 150, sortable: true, editable: true },
+        {
+    name: 'Price', index: 'Price', width: 150, sortable: true, editable: true,
+            sorttype: function(cell, rowData) {
+            return (parseInt(rowData.Price));
+        }
+    }
+	],
+	rowNum: 10,
+	rowList: [10, 25, 50, 100],
+	pager: '#jqPager',
+	pgbuttons: true,
+   	sortname: 'id',
+   	sortorder: "desc",
+   	onSelectRow: function(id) {
+   	    $('#goodData').show();
+        var rowData = $("#jqList").getRowData(id);
+   	    //console.log(rowData);
+   	    $('#goodName').html(rowData.Name);
+   	    $('#goodPrice').html(rowData.Price);
+   	    $('#movementGoodName').html(rowData.Name);
+   	    $.ajax(
+        {
+        url: "@Url.Action("GetGoodDetails", "Goods")",
+            type: "POST",
+            data: rowData.Id,
+            success: function(data, textStatus, jqXHR) {
+                //console.log(data);
+                $('#goodAmount').html(data.Amount);
+                $('#goodAllPrice').html(data.TotalPrice);
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                alert(textStatus);
+            }
+        });
+    },
+   	editurl: "@Url.Action("Update", "Goods")",
+       caption: "Goods"
+   });
+    jQuery("#jqList").jqGrid('navGrid', '#jqPager', { edit: false, add: false, del: false });
+
+</script>
+
+<script type = "text/javascript" >
+    $("#addGoodForm").submit(function (e)
+{
+    var postData = $(this).serializeArray();
+    console.log(postData);
+    var formURL = $(this).attr("action");
+    console.log(formURL);
+        $.ajax(
+        {
+    url: formURL,
+            type: "POST",
+            data: postData,
+            success: function(data, textStatus, jqXHR) {
+            //alert("alertindex1");
+            e.preventDefault();
+                $('#jqList').setGridParam({ url: '@Url.Action("GoodsList", "Goods")', datatype: 'json', page: 1 }).trigger('reloadGrid');
+                $('#newGoodName').val('');
+                $('#newGoodPrice').val('');
+                $('#refresh_jqList').click();
+                $("#dialog").dialog(opt).dialog("close");
+        },
+            error: function(jqXHR, textStatus, errorThrown) {
+            alert(textStatus);
+        }
+    });
+    e.preventDefault(); //STOP default action
+
+});
+</script>
+
+<script type = "text/javascript" >
+    $("#addMovementForm").submit(function (e)
+{
+    var postData = $(this).serializeArray();
+    console.log(postData);
+    var name = $('#movementGoodName').html();
+    //postData["Name"] = name;
+    postData.push({ name: "Name", value: name });
+    console.log(postData);
+    var formURL = $(this).attr("action");
+    console.log(formURL);
+        $.ajax(
+        {
+    url: formURL,
+            type: "POST",
+            data: postData,
+            success: function(data) {
+            console.log(data)
+                if (data.success)
+            {
+                    $("#movementDialog").dialog(opt2).dialog("close");
+                e.preventDefault();
+                    @*$.ajax(
+                {
+                   url: "@Url.Action("GetGoodDetails", "Goods")",
+                            type: "POST",
+                        data: rowData.Id,
+                        success: function (data, textStatus,  jqXHR) {
+                            //console.log(data);
+                            $('#goodAmount').html(data.Amount);
+                            $('#goodAllPrice').html(data.TotalPrice);
+                        },
+                        error: function (jqXHR, textStatus, errorThrown) {
+                            alert(textStatus);
+                        }
+                   });*@
+                }
+                else {
+                    $('#movementFormValidation').show();
+                    $('#movementFormValidation').html('You can\'t take more goods then you have');
+                    $('#amount').focus();
+                    $('#amount').addClass(' form-control-danger');
+                }
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                alert(textStatus);
+            }
+        });
+        e.preventDefault(); //STOP default action
+
+    });
+
+    $('#cancelMovement').click(function (e) {
+        $("#movementDialog").dialog(opt2).dialog("close");
+        $('#amount').removeClass(' form-control-danger');
+        $('#movementFormValidation').hide();
+        $('#movementFormValidation').html('');
+    });
+
+    //$("#cancelMovement").dialog({
+    //    close: function (event, ui) {
+    //        alert("close");
+    //        $("#movementDialog").dialog(opt2).dialog("close");
+    //        $('#amount').removeClass(' form-control-danger');
+    //        $('#movementFormValidation').hide();
+    //        $('#movementFormValidation').html('');
+    //    }
+    //});
+
+    $().ready(function () {
+        $("#addMovementForm").validate({
+            rules : {
+                    Amount : "required"
+            },
+            messages : {
+                Amount : "enter a number"
+            }
+        });
+    });
+
+</script>
+
+<script type="text/javascript">
+
+    function EditRow() {
+        var myGrid = $('#jqList');
+        selectedRowId = myGrid.jqGrid('getGridParam', 'selrow');
+        if (selectedRowId == null) alert('select row pleace');
+        else {
+            $("#jqList").jqGrid('editRow', selectedRowId);
+            this.disabled = 'true';
+            $("#saveBtn,#cancelBtn").attr("disabled", false);
+            $("#saveBtn").removeClass("btn btn-default").addClass("btn btn-success");
+        }
+    }
+
+    function SaveRow() {
+        var myGrid = $('#jqList');
+        selectedRowId = myGrid.jqGrid('getGridParam', 'selrow');
+        var id = $('#' + selectedRowId + "_Id").val();
+        var newName = $('#' + selectedRowId + "_Name").val();
+        var newPrice = $('#' + selectedRowId + "_Price").val();
+        var postData = "id=" + id + "&Name=" + newName + "&Price=" + newPrice;
+        $.ajax(
+       {
+           url: "@Url.Action("Update", "Goods")",
+           type: "POST",
+           data: postData,
+           success: function (data, textStatus, jqXHR) {
+               //alert(textStatus);
+               $('#refresh_jqList').click();
+               $('#jqList').setGridParam({ url: '@Url.Action("GoodsList", "Goods")', datatype: 'json', page: 1 }).trigger('reloadGrid');
+                   },
+           error: function (jqXHR, textStatus, errorThrown) {
+               alert(textStatus);
+           }
+       });
+        $("#jqList").jqGrid('restoreRow', selectedRowId);
+        $("#saveBtn,#cancelBtn").attr("disabled", true);
+        $("#editBtn").attr("disabled", false);
+        $("#saveBtn").removeClass("btn btn-success").addClass("btn btn-default");
+
+    }
+
+    function CancelRow() {
+        var myGrid = $('#jqList');
+        selectedRowId = myGrid.jqGrid('getGridParam', 'selrow');
+        $("#jqList").jqGrid('restoreRow', selectedRowId);
+        $("#saveBtn,#cancelBtn").attr("disabled", true);
+        $("#editBtn").attr("disabled", false);
+        $("#saveBtn").removeClass("btn btn-success").addClass("btn btn-default");
+    }
+    function DeleteRow() {
+        var myGrid = $('#jqList');
+        selectedRowId = myGrid.jqGrid('getGridParam', 'selrow');
+        $.ajax(
+        {
+           url: "@Url.Action("DeleteGood", "Goods")",
+            type: "POST",
+            data: selectedRowId,
+            success: function (data, textStatus, jqXHR) {
+                $('#goodsTable')./*trigger('reloadGrid').*/setGridParam({ url: '@Url.Action("GoodsList", "Goods")', datatype: 'json'/*, page: 1*/ }).trigger('reloadGrid');
+                $('#refresh_jqList').click();
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            alert(textStatus);
+        }
+    });
+    }
+
+    $("editBtn").click(function () {
+        var myGrid = $('#jqList');
+        selectedRowId = myGrid.jqGrid('getGridParam', 'selrow');
+        alert(selectedRowId);
+        $("#jqList").jqGrid('editRow', selectedRowId);
+        this.disabled = 'true';
+        $("#saveBtn,#cancelBtn").attr("disabled", false);
+    });
+</script>

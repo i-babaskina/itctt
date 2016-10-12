@@ -1,0 +1,33 @@
+﻿@using WebApplicationTest.Models
+@model LoginMyViewModel
+@{
+    ViewBag.Title = "Log in";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<div class="login">
+    <div>
+        <section id="loginForm">
+            @using (Html.BeginForm("LoginMy", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form", id="loginForm" }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Login, new { @class = "control-label" })
+                    @Html.TextBoxFor(m => m.Login, new { @class = "form-control", @maxlength = "255"})
+                    @Html.ValidationMessageFor(m => m.Login, "test message for login", new { @class = "text-danger"})
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Password, new { @class = "control-label" })
+                    @Html.PasswordFor(m => m.Password, new { @class = "form-control", @maxlength = "255" })
+                    @Html.ValidationMessageFor(m => m.Password, "test message for pass", new { @class = "text-danger" })
+                </div>
+
+                <div class="center-block">
+                    <input type="submit" value="Login" class="btn btn-success" />
+                </div>
+            }
+        </section>
+    </div>
+</div>
