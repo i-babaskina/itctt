@@ -94,40 +94,9 @@ caption: "Goods"
 
 jQuery("#jqList").jqGrid('navGrid', '#jqPager', { edit: false, add: false, del: false });
 
-    $("#addGoodForm").submit(function (e)
-    {
-        var postData = $(this).serializeArray();
-        console.log(postData);
-        var formURL = $(this).attr("action");
-        console.log(formURL);
-        $.ajax(
-        {
-            url: formURL,
-            type: "POST",
-            data: postData,
-            success: function(data, textStatus, jqXHR) {
-                //alert("alertindex1");
-                e.preventDefault();
-                $('#jqList').setGridParam({ url: '/Goods/GoodsList', datatype: 'json', page: 1 }).trigger('reloadGrid');
-                $('#newGoodName').val('');
-                $('#newGoodPrice').val('');
-                $('#refresh_jqList').click();
-                $("#dialog").dialog(opt).dialog("close");
-            },
-            error: function(jqXHR, textStatus, errorThrown) {
-                alert(textStatus);
-            }
-        });
-        e.preventDefault(); //STOP default action
-
-    });
-    //$("#addMovementForm").submit(function (e)
+    //$("#addGoodForm").submit(function (e)
     //{
     //    var postData = $(this).serializeArray();
-    //    console.log(postData);
-    //    var name = $('#movementGoodName').html();
-    //    //postData["Name"] = name;
-    //    postData.push({ name: "Name", value: name });
     //    console.log(postData);
     //    var formURL = $(this).attr("action");
     //    console.log(formURL);
@@ -136,26 +105,59 @@ jQuery("#jqList").jqGrid('navGrid', '#jqPager', { edit: false, add: false, del: 
     //        url: formURL,
     //        type: "POST",
     //        data: postData,
-    //        success: function(data) {
-    //            console.log(data)
-    //            if (data.success)
-    //            {
-    //                $("#movementDialog").dialog(opt2).dialog("close");
-    //                e.preventDefault();
-                    
-    //            }
-    //            else {
-    //                $('#movementFormValidation').show();
-    //                $('#movementFormValidation').html('You can\'t take more goods then you have');
-    //                $('#amount').focus();
-    //                $('#amount').addClass(' form-control-danger');
-    //            }
+    //        success: function(data, textStatus, jqXHR) {
+    //            //alert("alertindex1");
+    //            e.preventDefault();
+    //            $('#jqList').setGridParam({ url: '/Goods/GoodsList', datatype: 'json', page: 1 }).trigger('reloadGrid');
+    //            $('#newGoodName').val('');
+    //            $('#newGoodPrice').val('');
+    //            $('#refresh_jqList').click();
+    //            $("#dialog").dialog(opt).dialog("close");
     //        },
-    //        error: function (jqXHR, textStatus, errorThrown) {
+    //        error: function(jqXHR, textStatus, errorThrown) {
     //            alert(textStatus);
     //        }
-    //     });
-    //     e.preventDefault(); //STOP default action
+    //    });
+    //    e.preventDefault(); //STOP default action
+
+    //});
+    //$("#addMovementForm").submit(function (e)
+    //{
+    //    // if (form.valid()) 
+    //    {
+    //        var postData = $(this).serializeArray();
+    //        console.log(postData);
+    //        var name = $('#movementGoodName').html();
+    //        //postData["Name"] = name;
+    //        postData.push({ name: "Name", value: name });
+    //        console.log(postData);
+    //        var formURL = $(this).attr("action");
+    //        console.log(formURL);
+    //        $.ajax(
+    //        {
+    //            url: formURL,
+    //            type: "POST",
+    //            data: postData,
+    //            success: function (data) {
+    //                console.log(data)
+    //                if (data.success) {
+    //                    $("#movementDialog").dialog(opt2).dialog("close");
+    //                    e.preventDefault();
+
+    //                }
+    //                else {
+    //                    $('#movementFormValidation').show();
+    //                    $('#movementFormValidation').html('You can\'t take more goods then you have');
+    //                    $('#amount').focus();
+    //                    $('#amount').addClass(' form-control-danger');
+    //                }
+    //            },
+    //            error: function (jqXHR, textStatus, errorThrown) {
+    //                alert(textStatus);
+    //            }
+    //        });
+    //        e.preventDefault(); //STOP default action
+    //    }
     //});
 
 $('#cancelMovement').click(function (e) {
@@ -175,6 +177,64 @@ $('#cancelMovement').click(function (e) {
 //    }
 //});
 
+
+jQuery.validator.addMethod(
+    "money",
+    function(value, element) {
+        var isValidMoney = /^\d{0,4}(\.\d{0,2})?$/.test(value);
+        return this.optional(element) || isValidMoney;
+    },
+    "Insert "
+);
+
+
+$().ready(function () {
+    $("#addGoodForm").validate({
+        rules: {
+            Name: { required: true, maxlength: 50 },
+            //TODO: only 9999 is max correct value. why??????
+            Price: { required: true, money: true, range: [0.01, 100001] }
+        },
+        messages: {
+            Name: { required: "enter a name", maxlength: "Maximum name length is 50 char" },
+            Price: { required: "This field is required", money: "Invalid price format. Price must be between 0.01 and 100000", range: "Price must be between 0.01 and 100000" }
+        },
+        submitHandler: function (form) {
+            var postData = $(form).serializeArray();
+            console.log(postData);
+            var formURL = $(form).attr("action");
+            console.log(formURL);
+            $.ajax(
+            {
+                url: formURL,
+                type: "POST",
+                data: postData,
+                success: function (data, textStatus, jqXHR) {
+                    //alert("alertindex1");
+                    if (data.success) {
+                        //form.preventDefault();
+                        $('#jqList').setGridParam({ url: '/Goods/GoodsList', datatype: 'json', page: 1 }).trigger('reloadGrid');
+                        $('#newGoodName').val('');
+                        $('#newGoodPrice').val('');
+                        $('#refresh_jqList').click();
+                        $("#dialog").dialog(opt).dialog("close");
+                    }
+                    else {
+                        $('#goodFormValidation').show();
+                        $('#goodFormValidation').html(data.responseText);
+                        $('#name').focus();
+                        $('#name').addClass(' form-control-danger');
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    alert(textStatus);
+                }
+            });
+        }
+    });
+});
+
+
 $().ready(function () {
     $("#addMovementForm").validate({
         rules: {
@@ -183,18 +243,15 @@ $().ready(function () {
         messages: {
             Amount: "enter a number"
         },
-        showErrors: function (errorMap, errorList) {
-            this.defaultShowErrors();
-            Cufon.refresh();
-        },
-        success: function () {
-            var postData = $(this).serializeArray();
+        submitHandler: function (form) {
+            var postData = $(form).serializeArray();
+            alert('smth');
             console.log(postData);
             var name = $('#movementGoodName').html();
             //postData["Name"] = name;
             postData.push({ name: "Name", value: name });
             console.log(postData);
-            var formURL = $(this).attr("action");
+            var formURL = $(form).attr("action");
             console.log(formURL);
             $.ajax(
             {
@@ -205,7 +262,7 @@ $().ready(function () {
                     console.log(data)
                     if (data.success) {
                         $("#movementDialog").dialog(opt2).dialog("close");
-                        e.preventDefault();
+                        form.preventDefault();
 
                     }
                     else {
@@ -219,6 +276,7 @@ $().ready(function () {
                     alert(textStatus);
                 }
             });
+            //form.preventDefault();
         }
     });
 });

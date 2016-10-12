@@ -53,8 +53,9 @@ namespace WebApplicationTest.Helpers
                 String[] splitKeyValue = pair.Split(KEY_VALUE_SEPARATOR);
                 mvmAttributes.Add(splitKeyValue[0], splitKeyValue[1]);
             }
-            if (mvmAttributes.Count < 3) return null;
+            //if (mvmAttributes.Count < 3) return null;
             Movement movement = new Movement();
+            //if (mvmAttributes["Amount"] == "") return null;
             movement.Amount = Int32.Parse(mvmAttributes["Amount"]);
             movement.Date = DateTime.Now;//Convert.ToDateTime(mvmAttributes["Date"]);
             movement.Type = mvmAttributes["Type"];

@@ -91,12 +91,13 @@ namespace WebApplicationTest.Controllers
             String good = Converters.InputStreamToString(Request.InputStream);
             Good g = new Good();
             g = Converters.JqGridInputToGood(good);
+            if (DAO.GetGoodByName(g.Name) != null) return Json(new { success = false, responseText = "Good with this name already exist." }, JsonRequestBehavior.AllowGet);
             Boolean success = DAO.AddGood(g);
             if (success)
             {
-                return Json(new { success = true, responseText = "Good successfulu added" }, JsonRequestBehavior.AllowGet);
+                return Json(new { success = true, responseText = "Good successfulu added." }, JsonRequestBehavior.AllowGet);
             }
-            else return Json(new { success = false, responseText = "Something wrong" }, JsonRequestBehavior.AllowGet);
+            else return Json(new { success = false, responseText = "Something wrong." }, JsonRequestBehavior.AllowGet);
         }
 
         public void DeleteGood()
@@ -129,7 +130,7 @@ namespace WebApplicationTest.Controllers
             String updateInfo = Converters.InputStreamToString(Request.InputStream);
             Movement movement = Converters.JqGridInputtoMovement(updateInfo);
             Boolean isAdded = DAO.AddMovement(movement);
-            return Json(new { success = isAdded, responseText = (isAdded ? "Added successful" : "The are not enought good's amount") }, JsonRequestBehavior.AllowGet);
+            return Json(new { success = isAdded, responseText = (isAdded ? "Added successful." : "The are not enought good's amount.") }, JsonRequestBehavior.AllowGet);
         }
 
         //[HttpGet]
@@ -142,7 +143,7 @@ namespace WebApplicationTest.Controllers
             {
                 return Json(new { Id = good.Id, Name = good.Name, Price = good.Price, Amount = DAO.GetAllCount(goodId), TotalPrice = DAO.CalculateAllPrice(goodId) }, JsonRequestBehavior.AllowGet);
             }
-            else return Json(new { success = false, responseText = "Something wrong" }, JsonRequestBehavior.AllowGet);
+            else return Json(new { success = false, responseText = "Something wrong." }, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult GetGoodMovement(String inputId)
