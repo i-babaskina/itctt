@@ -1,10 +1,10 @@
 ﻿@using WebApplicationTest.Models
 @model LoginMyViewModel
 @{
-    ViewBag.Title = "Log in";
+    ViewBag.Title = "Hello darkness my old friend";
 }
 
-<h2>@ViewBag.Title</h2>
+<h5>@ViewBag.Title</h5>
 
 <div class="login">
     <div>
@@ -13,13 +13,14 @@
                 <h3 class="panel-title">Sign In</h3>
             </div>
             <div class="panel-body">
-                <form role="form">
+                <div class="alert alert-danger" id="loginFormValidation" role="alert" style="display:none;"></div>
+                <form role="form" id="loginForm" action="@Url.Action("SignIn", "Account")">
                     <fieldset>
                         <div class="form-group">
-                            <input class="form-control" placeholder="E-mail" name="login" type="text" autofocus="">
+                            <input class="form-control" placeholder="Login" name="Login" type="text" autofocus="">
                         </div>
                         <div class="form-group">
-                            <input class="form-control" placeholder="Password" name="password" type="password" value="">
+                            <input class="form-control" placeholder="Password" name="Password" type="password" value="">
                         </div>
                         <input type="submit" class="btn btn-default" value="Sign in" />
                     </fieldset>
@@ -27,5 +28,11 @@
             </div>
         </div>
     </div>
-    </div>
 </div>
+
+
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/bootstrap")
+@Scripts.Render("~/bundles/jqueryval")
+@Scripts.Render("~/bundles/jqGrid")
+@Scripts.Render("~/bundles/scripts")

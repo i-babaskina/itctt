@@ -236,6 +236,46 @@ $().ready(function () {
 
 
 $().ready(function () {
+    $("#loginForm").validate({
+        rules: {
+            Login: { required: true, maxlength: 255 },
+            //TODO: only 9999 is max correct value. why??????
+            Password: { required: true, maxlength: 255 }
+        },
+        messages: {
+            Login: { required: "This field is required", maxlength: "Maximum login length is 255 char" },
+            Password: { required: "This field is required", maxlength: "Maximum password length is 255 char" }
+        },
+        submitHandler: function (form) {
+            var postData = $(form).serializeArray();
+            console.log(postData);
+            var formURL = $(form).attr("action");
+            $.ajax(
+            {
+                url: formURL,
+                type: "POST",
+                data: postData,
+                success: function (data, textStatus, jqXHR) {
+                    //alert("alertindex1");
+                    if (data.success) {
+                        window.location.replace("/Goods/Index");
+                    }
+                    else {
+                        $('#loginFormValidation').show();
+                        $('#loginFormValidation').html(data.responseText);
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    alert("bad");
+                    alert(textStatus);
+                }
+            });
+        }
+    });
+});
+
+
+$().ready(function () {
     $("#addMovementForm").validate({
         rules: {
             Amount: "required"

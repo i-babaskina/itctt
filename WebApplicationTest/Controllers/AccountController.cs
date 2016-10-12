@@ -59,6 +59,14 @@ namespace WebApplicationTest.Controllers
             return View();
         }
 
+        [AllowAnonymous]
+        public ActionResult SignIn()
+        {
+            Boolean b = Request.IsAuthenticated;
+            string input = Helpers.Converters.InputStreamToString(Request.InputStream);
+            return Json(new { success = true });
+        }
+
         //[HttpPost]
         //[AllowAnonymous]
         //[ValidateAntiForgeryToken]
