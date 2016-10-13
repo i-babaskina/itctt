@@ -28,6 +28,13 @@ var opt3 = {
     title: 'Delete good?'
 }
 
+var opt4 = {
+    autoOpen: false,
+    modal: true,
+    width: 450,
+    height: 300
+}
+
 
 $("#opener").click(function ()
 {
@@ -44,6 +51,47 @@ $("#showMovement").click(function ()
 {
     $("#movementDialog").dialog(opt2).dialog("open");
 });
+
+$("#showStat").click(function () {
+    $("#dialogStat").dialog(opt4).dialog("open");
+    var myGrid = $('#jqList');
+    var rowId = myGrid.jqGrid('getGridParam', 'selrow');
+    console.log(rowId);
+    var id = $('#' + rowId).children().first().text();
+    console.log(id);
+    $("#jqStat").jqGrid({
+        url: '/Goods/GetAllMovementsForGood?goodId=' + id,
+        datatype: "json",
+        colNames: ['Operator', 'Operation', 'Date', 'Amount'],
+        colModel: [
+            { name: 'User', index: 'User', width: 100, sortable: true },
+            { name: 'Type', index: 'Type', width: 100, sortable: true },
+            { name: 'Date', index: 'Date', width: 150, sorttype: "date", sortable: true, date: true, formatter: myformatter},
+            { name: 'Amount', index: 'Amount', width: 60, sortable: true },
+        ],
+        rowNum: 10,
+        rowList: [10, 25, 50, 100],
+        pager: '#pagerStat',
+        sortname: 'Date',
+        viewrecords: true,
+        sortorder: "desc",
+        loadonce: true,
+        caption: "Good stats"
+    });
+    $("#jqStat").jqGrid('setGridParam', {
+        url: '/Goods/GetAllMovementsForGood?goodId=' + id,
+        datatype: 'json'
+    }).trigger('reloadGrid');
+});
+
+function myformatter(cellvalue, options, rowObject) {
+    new_formated_cellvalue = cellvalue.replace('T', ' ');
+    var index = new_formated_cellvalue.lastIndexOf('.');
+    if (index > 0)
+        new_formated_cellvalue = new_formated_cellvalue.substring(0, index);
+    return new_formated_cellvalue;
+}
+
 
 jQuery("#jqList").jqGrid({
     url: '/Goods/GoodsList',
@@ -394,3 +442,4 @@ function DeleteGood() {
 $("#cancelDelete").click(function () {
     $("#dialogDelete").dialog(opt3).dialog("close");
 });
+

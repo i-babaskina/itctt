@@ -44,7 +44,7 @@ namespace WebApplicationTest.Helpers
             return result;
         }
 
-        public static Movement JqGridInputtoMovement(string input)
+        public static Movement JqGridInputtoMovement(String input)
         {
             String[] inputPairs = input.Split(PAIR_SEPARATOR);
             Dictionary<string, string> mvmAttributes = new Dictionary<string, string>();
@@ -62,6 +62,22 @@ namespace WebApplicationTest.Helpers
             movement.GoodId = DAO.GetGoodByName(mvmAttributes["Name"]).Id;
             //movement.Good = DAO.GetGoodByName(mvmAttributes["Name"]);
             return movement;
+        }
+
+        public static User LoginInputToUser(String input)
+        {
+            String[] inputPairs = input.Split(PAIR_SEPARATOR);
+            Dictionary<string, string> usrAttributes = new Dictionary<string, string>();
+            foreach (String pair in inputPairs)
+            {
+                String[] splitKeyValue = pair.Split(KEY_VALUE_SEPARATOR);
+                usrAttributes.Add(splitKeyValue[0], splitKeyValue[1]);
+            }
+            User user = new User();
+            user.Login = usrAttributes["Login"];
+            user.Password = usrAttributes["Password"];
+            return user;
+
         }
     }
 }

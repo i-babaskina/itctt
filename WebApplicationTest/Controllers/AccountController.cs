@@ -9,6 +9,9 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using WebApplicationTest.Models;
+using WebApplicationTest.Helpers;
+using WebApplicationTest.Providers;
+using System.Web.Security;
 
 namespace WebApplicationTest.Controllers
 {
@@ -17,6 +20,7 @@ namespace WebApplicationTest.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        private CustomMembershipProvider provider = new CustomMembershipProvider();
 
         public AccountController()
         {
@@ -60,11 +64,37 @@ namespace WebApplicationTest.Controllers
         }
 
         [AllowAnonymous]
-        public ActionResult SignIn()
+        public ActionResult SignIn(String returnUrl)
         {
+
             Boolean b = Request.IsAuthenticated;
-            string input = Helpers.Converters.InputStreamToString(Request.InputStream);
-            return Json(new { success = true });
+            string input = Converters.InputStreamToString(Request.InputStream);
+            User user = Converters.LoginInputToUser(input);
+            var appUser = new ApplicationUser { UserName = user.Login};
+            var result = UserManager.Create(appUser, user.Password);
+            
+            if (provider.ValidateUser(user.Login, user.Password))
+            {
+                var res = SignInManager.PasswordSignInAsync(user.Login, user.Password, true, shouldLockout: false);
+                FormsAuthentication.SetAuthCookie(appUser.UserName, true);
+                //FormsAuthentication.RedirectFromLoginPage(appUser.UserName, true);
+                var usr = User;
+                return Json(new { success = true, returnUrl = returnUrl });
+            }
+            else return Json(new { success = false, message = "Invalid login or password"});
+        }
+
+        [AllowAnonymous]
+        public void AddUser()
+        {
+            var user = provider.CreateUser("testuser", "123456");
+            var name = user.UserName;
+        }
+
+        [AllowAnonymous]
+        public void Logout()
+        {
+            FormsAuthentication.SignOut();
         }
 
         //[HttpPost]

@@ -39,6 +39,7 @@
     </tr>
 </table>
 <button id="showMovement" class="btn btn-info">Good coming/consumption</button>
+<button id="showStat" class="btn btn-info">Good statistics</button>
 
 <div id="dialog" class="dialog-box" title="Dialog Title" style="display:none;">
     <div class="add-good">
@@ -93,6 +94,11 @@
         <button class="btn btn-danger" onclick="DeleteGood();">Yes</button>
         <button class="btn btn-default" id="cancelDelete">No</button>
     </div>
+</div>
+
+<div id="dialogStat" class="dialog-box" title="Good Statistics" style="display:none;">
+    <table id="jqStat"></table>
+    <div id="pagerStat"></div>
 </div>
 
 @Scripts.Render("~/bundles/jquery")

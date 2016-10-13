@@ -10,6 +10,7 @@ using WebApplicationTest.DataAccess;
 using WebApplicationTest.Models;
 using Newtonsoft.Json;
 using WebApplicationTest.Helpers;
+using System.Web.Security;
 
 namespace WebApplicationTest.Controllers
 {
@@ -18,9 +19,13 @@ namespace WebApplicationTest.Controllers
         private GoodsContext db = new GoodsContext();
 
         // GET: Goods
+        //[Authorize]
         public ActionResult Index()
         {
-            return View();
+            //if (User.Identity.IsAuthenticated)
+            var coockie = FormsAuthentication.GetAuthCookie(User.Identity.Name, true);
+                return View();
+            //else return RedirectToAction("LoginMy", "Account");
         }
 
         public String GoodsList()
@@ -113,7 +118,7 @@ namespace WebApplicationTest.Controllers
             using (GoodsContext context = new GoodsContext())
             {
                 List<Movement> goods = DAO.GetMovementsByGoodId(Id);
-                result = JsonConvert.SerializeObject(goods);
+                result = JsonConvert.SerializeObject(goods); //TODO: Error when serialize Good
             }
             return result;
         }

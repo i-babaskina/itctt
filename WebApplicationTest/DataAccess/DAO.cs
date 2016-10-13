@@ -77,6 +77,7 @@ namespace WebApplicationTest.DataAccess
             List<Movement> result = new List<Movement>();
             using (GoodsContext context = new GoodsContext())
             {
+                var mov = context.Set<Movement>().ToList<Movement>();
                 result = context.Set<Movement>().Where(x => x.GoodId == goodId).ToList<Movement>();
             }
             return result;
