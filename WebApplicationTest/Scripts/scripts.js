@@ -304,6 +304,7 @@ $().ready(function () {
                 type: "POST",
                 data: postData,
                 success: function (data, textStatus, jqXHR) {
+                    console.log(data);
                     //alert("alertindex1");
                     if (data.success) {
                         window.location.replace("/Goods/Index");

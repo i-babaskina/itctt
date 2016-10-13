@@ -22,9 +22,12 @@ namespace WebApplicationTest.Controllers
         //[Authorize]
         public ActionResult Index()
         {
-            //if (User.Identity.IsAuthenticated)
+            if (User.Identity.IsAuthenticated)
+            {
+
+            }
             var coockie = FormsAuthentication.GetAuthCookie(User.Identity.Name, true);
-                return View();
+            return View();
             //else return RedirectToAction("LoginMy", "Account");
         }
 
