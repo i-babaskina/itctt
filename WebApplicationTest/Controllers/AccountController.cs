@@ -78,7 +78,7 @@ namespace WebApplicationTest.Controllers
                 RedirectToAction("Index", "Goods");
                 return Json(new { success = true, returnUrl = returnUrl });
             }
-            else return Json(new { success = false, message = "Invalid login or password"});
+            else return Json(new { success = false, message = "Invalid login or password,"});
         }
 
         [AllowAnonymous]

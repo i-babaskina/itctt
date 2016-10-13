@@ -229,7 +229,7 @@ $('#cancelMovement').click(function (e) {
 jQuery.validator.addMethod(
     "money",
     function(value, element) {
-        var isValidMoney = /^\d{0,4}(\.\d{0,2})?$/.test(value);
+        var isValidMoney = /^\d{0,10}(\.\d{0,2})?$/.test(value);
         return this.optional(element) || isValidMoney;
     },
     "Insert "
@@ -241,11 +241,11 @@ $().ready(function () {
         rules: {
             Name: { required: true, maxlength: 50 },
             //TODO: only 9999 is max correct value. why??????
-            Price: { required: true, money: true, range: [0.01, 100001] }
+            Price: { required: true, money: true, max: 100000, min: 0.1 }
         },
         messages: {
             Name: { required: "enter a name", maxlength: "Maximum name length is 50 char" },
-            Price: { required: "This field is required", money: "Invalid price format. Price must be between 0.01 and 100000", range: "Price must be between 0.01 and 100000" }
+            Price: { required: "This field is required", money: "Invalid price format.", max: "Price must be less then 100000", min: "Price must be more then 0.1" }
         },
         submitHandler: function (form) {
             var postData = $(form).serializeArray();
@@ -327,10 +327,10 @@ $().ready(function () {
 $().ready(function () {
     $("#addMovementForm").validate({
         rules: {
-            Amount: "required"
+            Amount: {required: true, max: 1000, digits: true}
         },
         messages: {
-            Amount: "enter a number"
+            Amount: { required: "Enter a number.", max: "Amount must be less then 1000.", digits: "Amount can be only integer." }
         },
         submitHandler: function (form) {
             var postData = $(form).serializeArray();

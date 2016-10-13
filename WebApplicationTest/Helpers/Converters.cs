@@ -60,6 +60,7 @@ namespace WebApplicationTest.Helpers
             movement.Date = DateTime.Now;//Convert.ToDateTime(mvmAttributes["Date"]);
             movement.Type = mvmAttributes["Type"];
             movement.GoodId = DAO.GetGoodByName(mvmAttributes["Name"]).Id;
+            movement.User = HttpContext.Current.User.Identity.Name;
             //movement.Good = DAO.GetGoodByName(mvmAttributes["Name"]);
             return movement;
         }
