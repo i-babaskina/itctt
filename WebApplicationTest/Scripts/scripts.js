@@ -1,8 +1,6 @@
-﻿
-    //$("#dialog").dialog({ autoOpen: false });
-    //$("#opener").click(function () {
-    //    $("#dialog").dialog("open");
-    //});
+﻿var goodMovements = '/Goods/GetAllMovementsForGood?goodId=';
+
+
 
     var opt = {
         autoOpen: false,
@@ -114,7 +112,10 @@ jQuery("#jqList").jqGrid({
     pgbuttons: true,
     sortname: 'id',
     sortorder: "desc",
-    onSelectRow: function(id) {
+    onSelectRow: function (id) {
+        $('#showMovement').prop('disabled', false);
+        $('#showStat').prop('disabled', false);
+        $('#deleteBtn').prop('disabled', false);
         $('#goodData').show();
         var rowData = $("#jqList").getRowData(id);
         //console.log(rowData);
@@ -128,6 +129,7 @@ jQuery("#jqList").jqGrid({
         data: rowData.Id,
         success: function(data, textStatus, jqXHR) {
             //console.log(data);
+            $('#goodPrice').html(data.Price);
             $('#goodAmount').html(data.Amount);
             $('#goodAllPrice').html(data.TotalPrice);
         },
@@ -142,71 +144,6 @@ caption: "Goods"
 
 jQuery("#jqList").jqGrid('navGrid', '#jqPager', { edit: false, add: false, del: false });
 
-    //$("#addGoodForm").submit(function (e)
-    //{
-    //    var postData = $(this).serializeArray();
-    //    console.log(postData);
-    //    var formURL = $(this).attr("action");
-    //    console.log(formURL);
-    //    $.ajax(
-    //    {
-    //        url: formURL,
-    //        type: "POST",
-    //        data: postData,
-    //        success: function(data, textStatus, jqXHR) {
-    //            //alert("alertindex1");
-    //            e.preventDefault();
-    //            $('#jqList').setGridParam({ url: '/Goods/GoodsList', datatype: 'json', page: 1 }).trigger('reloadGrid');
-    //            $('#newGoodName').val('');
-    //            $('#newGoodPrice').val('');
-    //            $('#refresh_jqList').click();
-    //            $("#dialog").dialog(opt).dialog("close");
-    //        },
-    //        error: function(jqXHR, textStatus, errorThrown) {
-    //            alert(textStatus);
-    //        }
-    //    });
-    //    e.preventDefault(); //STOP default action
-
-    //});
-    //$("#addMovementForm").submit(function (e)
-    //{
-    //    // if (form.valid()) 
-    //    {
-    //        var postData = $(this).serializeArray();
-    //        console.log(postData);
-    //        var name = $('#movementGoodName').html();
-    //        //postData["Name"] = name;
-    //        postData.push({ name: "Name", value: name });
-    //        console.log(postData);
-    //        var formURL = $(this).attr("action");
-    //        console.log(formURL);
-    //        $.ajax(
-    //        {
-    //            url: formURL,
-    //            type: "POST",
-    //            data: postData,
-    //            success: function (data) {
-    //                console.log(data)
-    //                if (data.success) {
-    //                    $("#movementDialog").dialog(opt2).dialog("close");
-    //                    e.preventDefault();
-
-    //                }
-    //                else {
-    //                    $('#movementFormValidation').show();
-    //                    $('#movementFormValidation').html('You can\'t take more goods then you have');
-    //                    $('#amount').focus();
-    //                    $('#amount').addClass(' form-control-danger');
-    //                }
-    //            },
-    //            error: function (jqXHR, textStatus, errorThrown) {
-    //                alert(textStatus);
-    //            }
-    //        });
-    //        e.preventDefault(); //STOP default action
-    //    }
-    //});
 
 $('#cancelMovement').click(function (e) {
     $("#movementDialog").dialog(opt2).dialog("close");
@@ -214,16 +151,6 @@ $('#cancelMovement').click(function (e) {
     $('#movementFormValidation').hide();
     $('#movementFormValidation').html('');
 });
-
-//$("#cancelMovement").dialog({
-//    close: function (event, ui) {
-//        alert("close");
-//        $("#movementDialog").dialog(opt2).dialog("close");
-//        $('#amount').removeClass(' form-control-danger');
-//        $('#movementFormValidation').hide();
-//        $('#movementFormValidation').html('');
-//    }
-//});
 
 
 jQuery.validator.addMethod(
@@ -240,8 +167,7 @@ $().ready(function () {
     $("#addGoodForm").validate({
         rules: {
             Name: { required: true, maxlength: 50 },
-            //TODO: only 9999 is max correct value. why??????
-            Price: { required: true, money: true, max: 100000, min: 0.1 }
+            Price: { required: true, money: true, max: 10000, min: 0.1 }
         },
         messages: {
             Name: { required: "enter a name", maxlength: "Maximum name length is 50 char" },
@@ -258,7 +184,6 @@ $().ready(function () {
                 type: "POST",
                 data: postData,
                 success: function (data, textStatus, jqXHR) {
-                    //alert("alertindex1");
                     if (data.success) {
                         //form.preventDefault();
                         $('#jqList').setGridParam({ url: '/Goods/GoodsList', datatype: 'json', page: 1 }).trigger('reloadGrid');
@@ -287,7 +212,6 @@ $().ready(function () {
     $("#loginForm").validate({
         rules: {
             Login: { required: true, maxlength: 255 },
-            //TODO: only 9999 is max correct value. why??????
             Password: { required: true, maxlength: 255 }
         },
         messages: {
@@ -327,10 +251,10 @@ $().ready(function () {
 $().ready(function () {
     $("#addMovementForm").validate({
         rules: {
-            Amount: {required: true, max: 1000, digits: true}
+            Amount: {required: true, min:1, max: 1000, digits: true}
         },
         messages: {
-            Amount: { required: "Enter a number.", max: "Amount must be less then 1000.", digits: "Amount can be only integer." }
+            Amount: { required: "Enter a number.", min: "Amount must be 1 or more", max: "Amount must be less then 1000", digits: "Amount can be only integer" }
         },
         submitHandler: function (form) {
             var postData = $(form).serializeArray();
@@ -380,6 +304,7 @@ $().ready(function () {
             this.disabled = 'true';
             $("#saveBtn,#cancelBtn").attr("disabled", false);
             $("#saveBtn").removeClass("btn btn-default").addClass("btn btn-success");
+            $("#editBtn").attr("disabled", true);
         }
     }
 
@@ -424,11 +349,13 @@ function CancelRow() {
 function DeleteGood() {
     var myGrid = $('#jqList');
     selectedRowId = myGrid.jqGrid('getGridParam', 'selrow');
+    var id = $('#' + selectedRowId).children().first().text();
+    console.log(id);
     $.ajax(
     {
         url: '/Goods/DeleteGood',
         type: "POST",
-    data: selectedRowId,
+    data: id,
     success: function (data, textStatus, jqXHR) {
         $('#goodsTable')./*trigger('reloadGrid').*/setGridParam({ url: '/Goods/GoodsList', datatype: 'json'/*, page: 1*/ }).trigger('reloadGrid');
         $('#refresh_jqList').click();

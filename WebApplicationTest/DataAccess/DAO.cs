@@ -9,6 +9,8 @@ namespace WebApplicationTest.DataAccess
 {
     public static class DAO
     {
+        private const String COMING = "Coming";
+        private const String CONSUMPTION = "Consumption";
         private const String MOVEMENTS = "Movements";
 
         public static List<Good> GetAllGoods()
@@ -73,7 +75,7 @@ namespace WebApplicationTest.DataAccess
         public static Boolean AddMovement(Movement movement)
         {
             Int32 commonCount = GetAllCount(movement.GoodId);
-            if (String.Equals(movement.Type, Types.Consumption) && commonCount < movement.Amount)
+            if (String.Equals(movement.Type, CONSUMPTION, StringComparison.InvariantCultureIgnoreCase) && commonCount < movement.Amount)
                return false;
             try
             {
@@ -98,7 +100,6 @@ namespace WebApplicationTest.DataAccess
                 List<Movement> result = new List<Movement>();
                 using (GoodsContext context = new GoodsContext())
                 {
-                    var mov = context.Set<Movement>().ToList<Movement>();
                     result = context.Set<Movement>().Where(x => x.GoodId == goodId).ToList<Movement>();
                 }
                 return result;
@@ -145,7 +146,7 @@ namespace WebApplicationTest.DataAccess
             }
         }
 
-        public static Int32 GetCountByType(Int32 goodId, Types type)
+        public static Int32 GetCountByType(Int32 goodId, String type)
         {
             try
             {
@@ -169,7 +170,7 @@ namespace WebApplicationTest.DataAccess
         {
             try
             {
-                Int32 result = GetCountByType(goodId, Types.Coming) - GetCountByType(goodId, Types.Consumption);
+                Int32 result = GetCountByType(goodId, COMING) - GetCountByType(goodId, CONSUMPTION);
                 return result;
             }
             catch (Exception e)
@@ -177,8 +178,8 @@ namespace WebApplicationTest.DataAccess
                 throw e;
             }
         }
-
-        public static List<Movement> GetAllMovementsByType(Int32 goodId, Types type)
+         
+        public static List<Movement> GetAllMovementsByType(Int32 goodId, String type)
         {
             try
             {

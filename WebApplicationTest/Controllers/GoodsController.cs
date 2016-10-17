@@ -17,7 +17,8 @@ namespace WebApplicationTest.Controllers
     [Authorize]
     public class GoodsController : Controller
     {
-        
+        readonly log4net.ILog logger = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         public ActionResult Index()
         {
             return View();
@@ -37,6 +38,7 @@ namespace WebApplicationTest.Controllers
             }
             catch (Exception e)
             {
+                logger.Error(e.Message);
                 return Results.SMTH_WRONG;
             }
         }
@@ -57,15 +59,25 @@ namespace WebApplicationTest.Controllers
             }
             catch (Exception e)
             {
+                logger.Error(e.Message);
                 return Results.ErrorResult();
             }
 
         }
 
-        public void DeleteGood()
+        public ActionResult DeleteGood()
         {
-            String id = Converters.ConvertInputStreamToString(Request.InputStream);
-            DAO.DeleteGood(Int32.Parse(id));
+            try
+            {
+                String id = Converters.ConvertInputStreamToString(Request.InputStream);
+                DAO.DeleteGood(Int32.Parse(id));
+                return Json(new { success = true}, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception e)
+            {
+                logger.Error(e.Message);
+                return Results.ErrorResult();
+            }
         }
 
         public String GetAllMovementsForGood(String goodId)
@@ -79,6 +91,7 @@ namespace WebApplicationTest.Controllers
             }
             catch (Exception e)
             {
+                logger.Error(e.Message);
                 result = Results.SMTH_WRONG;
             } 
             return result;
@@ -94,7 +107,7 @@ namespace WebApplicationTest.Controllers
             }
             catch (Exception e)
             {
-
+                logger.Error(e.Message);
             }
         }
 
@@ -109,6 +122,7 @@ namespace WebApplicationTest.Controllers
             }
             catch (Exception e)
             {
+                logger.Error(e.Message);
                 return Results.ErrorResult();
             }
         }
@@ -121,19 +135,22 @@ namespace WebApplicationTest.Controllers
             try
             {
                 good = DAO.GetGoodById(goodId);
+
+                if (good != null)
+                {
+
+                    Int32 amount = DAO.GetAllCount(goodId);
+                    Double price = good.Price * amount;
+
+                    return Json(new { Id = good.Id, Name = good.Name, Price = good.Price, Amount = amount, TotalPrice = price }, JsonRequestBehavior.AllowGet);
+                }
+                else return Json(new { success = false, message = "Can't find good." }, JsonRequestBehavior.AllowGet);
             }
-            catch
+            catch (Exception e)
             {
+                logger.Error(e.Message);
                 return Results.ErrorResult();
             }
-            if (good != null)
-            {
-                Int32 amount = DAO.GetAllCount(goodId);
-                Double price = good.Price * amount;
-
-                return Json(new { Id = good.Id, Name = good.Name, Price = good.Price, Amount = amount, TotalPrice = price }, JsonRequestBehavior.AllowGet);
-            }
-            else return Json(new { success = false, message = "Can't find good."}, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult GetGoodMovement(String inputId)
@@ -146,6 +163,7 @@ namespace WebApplicationTest.Controllers
             }
             catch(Exception e)
             {
+                logger.Error(e.Message);
                 return Results.ErrorResult();
             }
         }
