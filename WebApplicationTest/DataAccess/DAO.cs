@@ -41,14 +41,20 @@ namespace WebApplicationTest.DataAccess
             }
         }
 
-        public static void UpdateGood(Good good)
+        public static Boolean UpdateGood(Good good)
         {
+            List<Good> goodList = GetGoodsByName(good.Name);
+
+            if (goodList.Count > 1) return false;
+            else if (goodList.Count == 1 && goodList[0].Id != good.Id) return false;
+            
             try
             {
                 using (GoodsContext context = new GoodsContext())
                 {
                     context.Entry<Good>(good).State = System.Data.Entity.EntityState.Modified;
                     context.SaveChanges();
+                    return true;
                 }
             }
             catch (Exception e)
@@ -146,6 +152,25 @@ namespace WebApplicationTest.DataAccess
                 using (GoodsContext context = new GoodsContext())
                 {
                     good = context.Set<Good>().Where(x => String.Equals(x.Name, name)).FirstOrDefault();
+                }
+
+                return good;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        public static List<Good> GetGoodsByName(String name)
+        {
+            try
+            {
+                List<Good> good = new List<Good>();
+
+                using (GoodsContext context = new GoodsContext())
+                {
+                    good = context.Set<Good>().Where(x => String.Equals(x.Name, name)).ToList<Good>();
                 }
 
                 return good;

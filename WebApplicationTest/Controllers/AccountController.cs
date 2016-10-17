@@ -71,7 +71,7 @@ namespace WebApplicationTest.Controllers
         [AllowAnonymous]
         public void AddUser()
         {
-            var user = provider.CreateUser("testuser", "123456");
+            var user = provider.CreateUser("user22", "123456");
             var name = user.UserName;
         }
 

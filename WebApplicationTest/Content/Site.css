@@ -60,7 +60,7 @@ textarea {
     visibility: hidden;
 }
 
-.ui-jqgrid .ui-jqgrid-view, .ui-jqgrid .ui-jqgrid-pager {
+.ui-jqgrid .ui-jqgrid-view, .ui-jqgrid .ui-jqgrid-pager, .ui-jqgrid .ui-jqgrid-view input, .ui-jqgrid .ui-jqgrid-view select, .ui-jqgrid .ui-jqgrid-view textarea, .ui-jqgrid .ui-jqgrid-view button {
     font-size: 14px !important;
 }
 

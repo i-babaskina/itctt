@@ -127,6 +127,7 @@ $("#statBtnClose").click(function () {
                 $("#saveBtn,#cancelBtn").attr("disabled", true);
                 $("#editBtn").attr("disabled", false);
                 $("#saveBtn").removeClass("btn btn-success").addClass("btn btn-default");
+                $('#editGoodValidation').remove();
                 editedRow = -1;
             }
             $('#showMovement').prop('disabled', false);
@@ -381,8 +382,19 @@ $("#statBtnClose").click(function () {
                type: "POST",
                data: postData,
                success: function (data, textStatus, jqXHR) {
-                   $('#jqList').setGridParam({ url: goodListUrl, datatype: 'json' }).trigger('reloadGrid');
-                   $('#refresh_jqList').click();
+                   if (data.success) {
+                       $('#jqList').setGridParam({ url: goodListUrl, datatype: 'json' }).trigger('reloadGrid');
+                       $('#refresh_jqList').click();
+                       $("#jqList").jqGrid('restoreRow', selectedRowId);
+                       $("#saveBtn,#cancelBtn").attr("disabled", true);
+                       $("#editBtn").attr("disabled", false);
+                       $("#saveBtn").removeClass("btn btn-success").addClass("btn btn-default");
+                       editedRow = -1;
+                       $('#editGoodValidation').remove();
+                   }
+                   else {
+                       $('.ui-jqgrid-titlebar').after('<div class="alert alert-danger" id="editGoodValidation" role="alert">' + data.message + '</div>');
+                   }
                },
                error: function (jqXHR, textStatus, errorThrown) {
                    console.log(jqXHR);
@@ -390,11 +402,6 @@ $("#statBtnClose").click(function () {
                    alert(textStatus);
                }
            });
-            $("#jqList").jqGrid('restoreRow', selectedRowId);
-            $("#saveBtn,#cancelBtn").attr("disabled", true);
-            $("#editBtn").attr("disabled", false);
-            $("#saveBtn").removeClass("btn btn-success").addClass("btn btn-default");
-            editedRow = -1;
         }
     }
 
@@ -405,6 +412,7 @@ $("#statBtnClose").click(function () {
         $("#saveBtn,#cancelBtn").attr("disabled", true);
         $("#editBtn").attr("disabled", false);
         $("#saveBtn").removeClass("btn btn-success").addClass("btn btn-default");
+        $('#editGoodValidation').remove();
         editedRow = -1;
     }
 

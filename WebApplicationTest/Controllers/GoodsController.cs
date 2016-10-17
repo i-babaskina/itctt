@@ -101,17 +101,20 @@ namespace WebApplicationTest.Controllers
             return result;
         }
 
-        public void Update()
+        public ActionResult Update()
         {
             try
             {
                 String updateInfo = Converters.ConvertInputStreamToString(Request.InputStream);
                 Good good = Converters.ConvertJqGridInputToGood(updateInfo);
-                DAO.UpdateGood(good);
+                Boolean isUpdate = DAO.UpdateGood(good);
+                String message = (isUpdate) ? "Good successfuly added." : "Good with this name alredy exist.";
+                return Json( new { success = isUpdate, message = message }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception e)
             {
                 logger.Error(e.Message);
+                return Results.ErrorResult();
             }
         }
 
