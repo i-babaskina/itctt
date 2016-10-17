@@ -213,7 +213,6 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\Converters.cs" />
-    <Compile Include="Helpers\Enums.cs" />
     <Compile Include="Helpers\Results.cs" />
     <Compile Include="Migrations\201610121429594_InitialCreate.cs" />
     <Compile Include="Migrations\201610121429594_InitialCreate.Designer.cs">

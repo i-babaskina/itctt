@@ -11,8 +11,8 @@ namespace WebApplicationTest.Helpers
 {
     public class Converters
     {
-        private const char PAIR_SEPARATOR = '&';
-        private const char KEY_VALUE_SEPARATOR = '=';
+        private const Char PAIR_SEPARATOR = '&';
+        private const Char KEY_VALUE_SEPARATOR = '=';
 
         static CultureInfo ci = CultureInfo.InvariantCulture;
 

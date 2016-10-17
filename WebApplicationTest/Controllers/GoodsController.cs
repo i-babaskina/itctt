@@ -130,10 +130,10 @@ namespace WebApplicationTest.Controllers
         public ActionResult GetGoodDetails()
         {
             String updateInfo = Converters.ConvertInputStreamToString(Request.InputStream);
-            Int32 goodId = Int32.Parse(updateInfo);
-            Good good = new Good();
             try
             {
+                Int32 goodId = Int32.Parse(updateInfo);
+                Good good = new Good();
                 good = DAO.GetGoodById(goodId);
 
                 if (good != null)
