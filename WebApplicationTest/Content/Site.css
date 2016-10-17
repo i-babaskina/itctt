@@ -60,7 +60,21 @@ textarea {
     visibility: hidden;
 }
 
-.ui-jqgrid .ui-jqgrid-view, .ui-jqgrid .ui-jqgrid-pager, .ui-jqgrid .ui-jqgrid-view input, .ui-jqgrid .ui-jqgrid-view select, .ui-jqgrid .ui-jqgrid-view textarea, .ui-jqgrid .ui-jqgrid-view button {
+.ui-jqgrid .ui-jqgrid-view, .ui-jqgrid .ui-jqgrid-pager, 
+.ui-jqgrid .ui-jqgrid-view input, 
+.ui-jqgrid .ui-jqgrid-view select, 
+.ui-jqgrid .ui-jqgrid-view textarea, 
+.ui-jqgrid .ui-jqgrid-view button, 
+.ui-jqgrid .ui-pg-selbox   {
     font-size: 14px !important;
+}
+
+.ui-jqgrid .ui-pg-input {
+    height: 16px !important;
+    font-size: 13px !important;
+}
+
+.ui-jqgrid .ui-jqgrid-titlebar  {
+    font-size: 16px !important;
 }
 

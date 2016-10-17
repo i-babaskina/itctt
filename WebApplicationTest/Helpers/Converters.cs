@@ -62,9 +62,7 @@ namespace WebApplicationTest.Helpers
             Movement movement = new Movement();
             movement.Amount = Int32.Parse(mvmAttributes["Amount"]);
             String date = mvmAttributes["Date"].Replace("%3A", ":").Replace("+", " ");
-            //TODO: Code convention!! 
-            if (date.Length != 19)
-                date += "0"; //TODO: Looks like big crutch, yeah: wheh time has 40 seconds there are only 4 in input string (maybe for every time where seconds is multiple 10)
+            if (date.Length != 19) date += "0"; //TODO: Looks like big crutch, yeah: wheh time has 40 seconds there are only 4 in input string (maybe for every time where seconds is multiple 10)
             movement.Date = DateTime.ParseExact(date, "dd-MM-yyyy HH:mm:ss", ci);
             movement.Type = mvmAttributes["Type"];
             movement.GoodId = DAO.GetGoodByName(mvmAttributes["Name"]).Id;

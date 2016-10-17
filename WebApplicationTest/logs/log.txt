@@ -14,3 +14,5 @@ ERROR 2016-10-17 15:06:34,715 1279787ms GoodsController        GetGoodDetails   
 ERROR 2016-10-17 15:58:17,999 4383071ms GoodsController        GetGoodDetails     - ¬ходна€ строка имела неверный формат.
 ERROR 2016-10-17 16:03:29,779 4694851ms GoodsController        GetGoodDetails     - ¬ходна€ строка имела неверный формат.
 ERROR 2016-10-17 16:05:22,838 4807910ms GoodsController        GetGoodDetails     - ¬ходна€ строка имела неверный формат.
+ERROR 2016-10-17 18:21:09,280 1142196ms GoodsController        GetGoodDetails     - ¬ходна€ строка имела неверный формат.
+ERROR 2016-10-17 18:21:51,063 1183980ms GoodsController        GetGoodDetails     - ¬ходна€ строка имела неверный формат.
