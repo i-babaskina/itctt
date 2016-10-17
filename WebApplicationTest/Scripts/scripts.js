@@ -34,8 +34,8 @@ var opt3 = {
 var opt4 = {
     autoOpen: false,
     modal: true,
-    width: 450,
-    height: 320
+    width: 650,
+    height: 400
 }
 
 
@@ -67,10 +67,10 @@ $("#showStat").click(function () {
         datatype: "json",
         colNames: ['Operator', 'Operation', 'Date', 'Amount'],
         colModel: [
-            { name: 'User', index: 'User', width: 100, sortable: true },
-            { name: 'Type', index: 'Type', width: 100, sortable: true },
-            { name: 'Date', index: 'Date', width: 150, sortable: true, date: true, formatter: myformatter},
-            { name: 'Amount', index: 'Amount', width: 60, sortable: true },
+            { name: 'User', index: 'User', width: 150, sortable: true },
+            { name: 'Type', index: 'Type', width: 120, sortable: true },
+            { name: 'Date', index: 'Date', width: 250, sortable: true, date: true, formatter: myformatter},
+            { name: 'Amount', index: 'Amount', width: 100, sortable: true },
         ],
         rowNum: 10,
         rowList: [10, 25, 50, 100],
@@ -107,9 +107,9 @@ $("#statBtnClose").click(function () {
         colNames: ['Id', 'Name', 'Price'],
         colModel: [
             { name: 'Id', index: 'Id', width: 25, sortable: true, hidden: true, editable: true },
-            { name: 'Name', index: 'Name', width: 150, sortable: true, editable: true },
+            { name: 'Name', index: 'Name', width: 300, sortable: true, editable: true },
             {
-                name: 'Price', index: 'Price', width: 150, sortable: true, editable: true,
+                name: 'Price', index: 'Price', width: 300, sortable: true, editable: true,
                 sorttype: function(cell, rowData) {
                     return (parseInt(rowData.Price));
                 }
@@ -181,7 +181,7 @@ $("#statBtnClose").click(function () {
             var isValidMoney = /^\d{0,10}(\.\d{0,2})?$/.test(value);
             return this.optional(element) || isValidMoney;
         },
-        "Insert "
+        "Ivalid price value"
     );
 
     jQuery.validator.addMethod(

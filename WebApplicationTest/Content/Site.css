@@ -30,7 +30,7 @@ textarea {
 
 .ui-jqgrid-bdiv {
     overflow-y: auto;
-    /*height: 220px !important;*/
+    height: 220px !important;
     background-color: linen;
 }
 
@@ -59,3 +59,8 @@ textarea {
 .ui-dialog-titlebar-close {
     visibility: hidden;
 }
+
+.ui-jqgrid .ui-jqgrid-view, .ui-jqgrid .ui-jqgrid-pager {
+    font-size: 14px !important;
+}
+
