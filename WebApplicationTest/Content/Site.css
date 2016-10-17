@@ -55,3 +55,7 @@ textarea {
     color: #9d9d9d;
     padding-top: 15px;
 }
+
+.ui-dialog-titlebar-close {
+    visibility: hidden;
+}

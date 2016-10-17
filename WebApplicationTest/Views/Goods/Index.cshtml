@@ -54,6 +54,7 @@
                 <input type="text" class="form-control" name="Price" id="newGoodPrice">
             </div>
             <button type="submit" class="btn btn-success">Add good</button>
+            <button id="cancelAddGood" type="reset" class="btn btn-default">Cancel</button>
         </form>
     </div>
 </div>
@@ -98,6 +99,7 @@
 <div id="dialogStat" class="dialog-box" title="Good Statistics" style="display:none;">
     <table id="jqStat"></table>
     <div id="pagerStat"></div>
+    <button class="btn btn-default" id="statBtnClose">Ok</button>
 </div>
 
 @Scripts.Render("~/bundles/jquery")

@@ -6,7 +6,7 @@ using System.Web;
 
 namespace WebApplicationTest.Models
 {
-    public class LoginMyViewModel
+    public class LoginViewModel
     {
         [Required]
         [Display(Name = "Login")]

@@ -16,10 +16,12 @@ namespace WebApplicationTest.DataAccess
         public static List<Good> GetAllGoods()
         {
             List<Good> goods = new List<Good>();
+
             using (GoodsContext context = new GoodsContext())
             {
                 goods = context.Goods.Include(MOVEMENTS).ToList<Good>();
             }
+
             return goods;
         }
 
@@ -75,8 +77,12 @@ namespace WebApplicationTest.DataAccess
         public static Boolean AddMovement(Movement movement)
         {
             Int32 commonCount = GetAllCount(movement.GoodId);
+
             if (String.Equals(movement.Type, CONSUMPTION, StringComparison.InvariantCultureIgnoreCase) && commonCount < movement.Amount)
-               return false;
+            {
+                return false;
+            }
+
             try
             {
                 using (GoodsContext context = new GoodsContext())
@@ -98,10 +104,12 @@ namespace WebApplicationTest.DataAccess
             try
             {
                 List<Movement> result = new List<Movement>();
+
                 using (GoodsContext context = new GoodsContext())
                 {
                     result = context.Set<Movement>().Where(x => x.GoodId == goodId).ToList<Movement>();
                 }
+
                 return result;
             }
             catch (Exception e)
@@ -134,10 +142,12 @@ namespace WebApplicationTest.DataAccess
             try
             {
                 Good good = new Good();
+
                 using (GoodsContext context = new GoodsContext())
                 {
                     good = context.Set<Good>().Where(x => String.Equals(x.Name, name)).FirstOrDefault();
                 }
+
                 return good;
             }
             catch (Exception e)
@@ -184,10 +194,12 @@ namespace WebApplicationTest.DataAccess
             try
             {
                 List<Movement> result = new List<Movement>();
+
                 using (GoodsContext context = new GoodsContext())
                 {
                     result = context.Set<Movement>().Where(x => x.GoodId == goodId && String.Equals(x.Type, type)).ToList<Movement>();
                 }
+
                 return result;
             }
             catch (Exception e)

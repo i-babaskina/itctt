@@ -399,7 +399,7 @@
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\Account\LoginMy.cshtml" />
+    <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Goods\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>

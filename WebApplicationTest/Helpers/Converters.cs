@@ -20,11 +20,13 @@ namespace WebApplicationTest.Helpers
         {
             String[] inputPairs = input.Split(PAIR_SEPARATOR);
             Dictionary<String, String> goodAttributes = new Dictionary<String, String>();
+
             foreach (String pair in inputPairs)
             {
                 String[] splitKeyValue = pair.Split(KEY_VALUE_SEPARATOR);
                 goodAttributes.Add(splitKeyValue[0], splitKeyValue[1]);
             }
+
             Good good = new Good();
 
             if (goodAttributes.Keys.Contains("id"))
@@ -50,14 +52,20 @@ namespace WebApplicationTest.Helpers
         {
             String[] inputPairs = input.Split(PAIR_SEPARATOR);
             Dictionary<String, String> mvmAttributes = new Dictionary<String, String>();
+
             foreach (String pair in inputPairs)
             {
                 String[] splitKeyValue = pair.Split(KEY_VALUE_SEPARATOR);
                 mvmAttributes.Add(splitKeyValue[0], splitKeyValue[1]);
             }
+
             Movement movement = new Movement();
             movement.Amount = Int32.Parse(mvmAttributes["Amount"]);
-            movement.Date = DateTime.Now;
+            String date = mvmAttributes["Date"].Replace("%3A", ":").Replace("+", " ");
+            //TODO: Code convention!! 
+            if (date.Length != 19)
+                date += "0"; //TODO: Looks like big crutch, yeah: wheh time has 40 seconds there are only 4 in input string (maybe for every time where seconds is multiple 10)
+            movement.Date = DateTime.ParseExact(date, "dd-MM-yyyy HH:mm:ss", ci);
             movement.Type = mvmAttributes["Type"];
             movement.GoodId = DAO.GetGoodByName(mvmAttributes["Name"]).Id;
             movement.User = HttpContext.Current.User.Identity.Name;
@@ -68,11 +76,13 @@ namespace WebApplicationTest.Helpers
         {
             String[] inputPairs = input.Split(PAIR_SEPARATOR);
             Dictionary<String, String> usrAttributes = new Dictionary<String, String>();
+
             foreach (String pair in inputPairs)
             {
                 String[] splitKeyValue = pair.Split(KEY_VALUE_SEPARATOR);
                 usrAttributes.Add(splitKeyValue[0], splitKeyValue[1]);
             }
+
             User user = new User();
             user.Login = usrAttributes["Login"];
             user.Password = usrAttributes["Password"];

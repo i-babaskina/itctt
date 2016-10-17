@@ -48,10 +48,12 @@ namespace WebApplicationTest.Controllers
             String goodAttributes = Converters.ConvertInputStreamToString(Request.InputStream);
             Good good = new Good();
             good = Converters.ConvertJqGridInputToGood(goodAttributes);
+
             if (DAO.GetGoodByName(good.Name) != null)
             {
                 return Json(new { success = false, responseText = "Good with this name already exist." }, JsonRequestBehavior.AllowGet);
             }
+
             try
             {
                 DAO.AddGood(good);
@@ -84,6 +86,7 @@ namespace WebApplicationTest.Controllers
         {
             Int32 Id = Int32.Parse(goodId);
             String result = String.Empty;
+
             try
             {
                 List<Movement> goods = DAO.GetMovementsByGoodId(Id);
@@ -94,6 +97,7 @@ namespace WebApplicationTest.Controllers
                 logger.Error(e.Message);
                 result = Results.SMTH_WRONG;
             } 
+
             return result;
         }
 
@@ -115,6 +119,7 @@ namespace WebApplicationTest.Controllers
         {
             String updateInfo = Converters.ConvertInputStreamToString(Request.InputStream);
             Movement movement = Converters.ConvertJqGridInputToMovement(updateInfo);
+
             try
             {
                 Boolean isAdded = DAO.AddMovement(movement);
@@ -130,6 +135,7 @@ namespace WebApplicationTest.Controllers
         public ActionResult GetGoodDetails()
         {
             String updateInfo = Converters.ConvertInputStreamToString(Request.InputStream);
+
             try
             {
                 Int32 goodId = Int32.Parse(updateInfo);
@@ -138,12 +144,11 @@ namespace WebApplicationTest.Controllers
 
                 if (good != null)
                 {
-
                     Int32 amount = DAO.GetAllCount(goodId);
                     Double price = good.Price * amount;
-
                     return Json(new { Id = good.Id, Name = good.Name, Price = good.Price, Amount = amount, TotalPrice = price }, JsonRequestBehavior.AllowGet);
                 }
+
                 else return Json(new { success = false, message = "Can't find good." }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception e)
@@ -156,6 +161,7 @@ namespace WebApplicationTest.Controllers
         public ActionResult GetGoodMovement(String inputId)
         {
             Int32 goodId = Int32.Parse(inputId);
+
             try
             {
                 List<Movement> result = DAO.GetMovementsByGoodId(goodId);
