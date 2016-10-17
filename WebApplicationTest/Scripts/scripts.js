@@ -5,6 +5,8 @@ var updateGoodUrl = "/Goods/Update";
 var indexUrl = "/Goods/Index";
 var deleteGoodUrl = '/Goods/DeleteGood';
 
+var editedRow = -1;
+
 var opt = {
         autoOpen: false,
         modal: true,
@@ -67,7 +69,7 @@ $("#showStat").click(function () {
         colModel: [
             { name: 'User', index: 'User', width: 100, sortable: true },
             { name: 'Type', index: 'Type', width: 100, sortable: true },
-            { name: 'Date', index: 'Date', width: 150, sorttype: "date", sortable: true, date: true, formatter: myformatter},
+            { name: 'Date', index: 'Date', width: 150, sortable: true, date: true, formatter: myformatter},
             { name: 'Amount', index: 'Amount', width: 60, sortable: true },
         ],
         rowNum: 10,
@@ -116,9 +118,17 @@ jQuery("#jqList").jqGrid({
     sortname: 'id',
     sortorder: "desc",
     onSelectRow: function (id) {
+        if (editedRow != -1 && editedRow != parseInt(id)) {
+            $("#jqList").jqGrid('restoreRow', editedRow);
+            $("#saveBtn,#cancelBtn").attr("disabled", true);
+            $("#editBtn").attr("disabled", false);
+            $("#saveBtn").removeClass("btn btn-success").addClass("btn btn-default");
+            editedRow = -1;
+        }
         $('#showMovement').prop('disabled', false);
         $('#showStat').prop('disabled', false);
         $('#deleteBtn').prop('disabled', false);
+        $('#editBtn').prop('disabled', false);
         $('#goodData').show();
         var rowData = $("#jqList").getRowData(id);
         //console.log(rowData);
@@ -165,16 +175,21 @@ jQuery.validator.addMethod(
     "Insert "
 );
 
+jQuery.validator.addMethod(
+    "lettersonly",
+    function (value, element) {
+    return this.optional(element) || /^[a-z0-9_\-" "]+$/i.test(value);
+}, "Letters, digits, spaces, - and _ only please");
 
 $().ready(function () {
     $("#addGoodForm").validate({
         rules: {
-            Name: { required: true, maxlength: 50 },
-            Price: { required: true, money: true, max: 10000, min: 0.1 }
+            Name: { required: true, maxlength: 50, lettersonly: true },
+            Price: { required: true, money: true, max: 10000, min: 0.01 }
         },
         messages: {
             Name: { required: "enter a name", maxlength: "Maximum name length is 50 char" },
-            Price: { required: "This field is required", money: "Invalid price format.", max: "Price must be less then 100000", min: "Price must be more then 0.1" }
+            Price: { required: "This field is required", money: "Invalid price format.", max: "Price must be less then 100000", min: "Price must be more then 0.01" }
         },
         submitHandler: function (form) {
             var postData = $(form).serializeArray();
@@ -254,10 +269,10 @@ $().ready(function () {
 $().ready(function () {
     $("#addMovementForm").validate({
         rules: {
-            Amount: {required: true, min:1, max: 1000, digits: true}
+            Amount: { required: true, digits: true, min: 1, max: 1000 }
         },
         messages: {
-            Amount: { required: "Enter a number.", min: "Amount must be 1 or more", max: "Amount must be less then 1000", digits: "Amount can be only integer" }
+            Amount: { required: "Enter a number", digits: "Amount can be only integer", min: "Amount must be 1 or more", max: "Amount must be less then 1000" }
         },
         submitHandler: function (form) {
             var postData = $(form).serializeArray();
@@ -301,6 +316,7 @@ $().ready(function () {
 function EditRow() {
     var myGrid = $('#jqList');
     selectedRowId = myGrid.jqGrid('getGridParam', 'selrow');
+    editedRow = selectedRowId;
     if (selectedRowId == null) alert('select row pleace');
     else {
         $("#jqList").jqGrid('editRow', selectedRowId);
@@ -313,7 +329,6 @@ function EditRow() {
     }
 }
 
-var isNameValid = false, isPriceValid = false;
 //$().ready(function () {
 //    $('#updateGoodFormName').validate({
 //        rules: {
@@ -349,28 +364,52 @@ function SaveRow() {
     var id = $('#' + selectedRowId + "_Id").val();
     var newName = $('#' + selectedRowId + "_Name").val();
     var newPrice = $('#' + selectedRowId + "_Price").val();
-    var postData = "id=" + id + "&Name=" + newName + "&Price=" + newPrice;
-    $.ajax(
-   {
-       url: updateGoodUrl,
-        type: "POST",
-        data: postData,
-        success: function (data, textStatus, jqXHR) {
-            //alert(textStatus);
-            $('#jqList').setGridParam({ url: goodListUrl, datatype: 'json'/*, page: 1*/ }).trigger('reloadGrid');
-            $('#refresh_jqList').click();
-        },
-        error: function (jqXHR, textStatus, errorThrown) {
-            console.log(jqXHR);
-            alert('some error when update good');
-            alert(textStatus);
-        }
-    });
-$("#jqList").jqGrid('restoreRow', selectedRowId);
-$("#saveBtn,#cancelBtn").attr("disabled", true);
-$("#editBtn").attr("disabled", false);
-$("#saveBtn").removeClass("btn btn-success").addClass("btn btn-default");
+    var regexName = /^[a-z0-9_\-" "]+$/i;
+    var regexPrice = /^\d{0,6}(\.\d{0,2})?$/;
+    var isNameValid = false, isPriceValid = false;
+    $('#' + selectedRowId + "_Name").next().remove();
+    $('#' + selectedRowId + "_Price").next().remove();
+    //alert(newName.length);
+    if (!regexName.test(newName)) {
+        $('#' + selectedRowId + "_Name").after('<br><b>Letters, digits, spaces,<br> - and _ only</b>');
+    }
+    else if (newName.length > 50 || newName.length < 1) {
+        $('#' + selectedRowId + "_Name").after('<br><b>Length must be betwen 1 <br>and 50 chars</b>');
+    }
+    else isNameValid = true;
 
+    if (!regexPrice.test(newPrice)) {
+        $('#' + selectedRowId + "_Price").after('<br><b>Invalid price format.</b>');
+    }
+    else if (parseFloat(newPrice) > 10000 || parseFloat(newPrice) < 0.01) {
+        $('#' + selectedRowId + "_Price").after('<br><b>Price must be betwen <br>0.01 and 10000 chars</b>');
+    }
+    else isPriceValid = true;
+    
+    if (isNameValid && isPriceValid) {
+            var postData = "id=" + id + "&Name=" + newName + "&Price=" + newPrice;
+            $.ajax(
+           {
+               url: updateGoodUrl,
+                type: "POST",
+                data: postData,
+                success: function (data, textStatus, jqXHR) {
+                    //alert(textStatus);
+                    $('#jqList').setGridParam({ url: goodListUrl, datatype: 'json'/*, page: 1*/ }).trigger('reloadGrid');
+                    $('#refresh_jqList').click();
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.log(jqXHR);
+                    alert('some error when update good');
+                    alert(textStatus);
+                }
+            });
+        $("#jqList").jqGrid('restoreRow', selectedRowId);
+        $("#saveBtn,#cancelBtn").attr("disabled", true);
+        $("#editBtn").attr("disabled", false);
+        $("#saveBtn").removeClass("btn btn-success").addClass("btn btn-default");
+        editedRow = -1;
+    }
 }
 
 function CancelRow() {
@@ -380,6 +419,7 @@ function CancelRow() {
     $("#saveBtn,#cancelBtn").attr("disabled", true);
     $("#editBtn").attr("disabled", false);
     $("#saveBtn").removeClass("btn btn-success").addClass("btn btn-default");
+    editedRow = -1;
 }
 
 

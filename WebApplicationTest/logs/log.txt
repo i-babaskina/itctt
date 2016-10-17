@@ -2,3 +2,15 @@ INFO  2016-10-17 11:17:38,107 15091ms GoodsController        Index              
 ERROR 2016-10-17 11:26:15,194 48474ms GoodsController        DeleteGood         - «начение не может быть неопределенным.
 »м€ параметра: entityERROR 2016-10-17 13:45:51,916 97991ms GoodsController        GetGoodDetails     - ¬ходна€ строка имела неверный формат.
 ERROR 2016-10-17 13:46:20,459 126534ms GoodsController        GetGoodDetails     - ¬ходна€ строка имела неверный формат.
+ERROR 2016-10-17 15:01:08,048 953120ms GoodsController        GetGoodDetails     - ¬ходна€ строка имела неверный формат.
+ERROR 2016-10-17 15:01:13,402 958474ms GoodsController        GetGoodDetails     - ¬ходна€ строка имела неверный формат.
+ERROR 2016-10-17 15:01:17,661 962733ms GoodsController        GetGoodDetails     - ¬ходна€ строка имела неверный формат.
+ERROR 2016-10-17 15:01:19,538 964610ms GoodsController        GetGoodDetails     - ¬ходна€ строка имела неверный формат.
+ERROR 2016-10-17 15:02:15,646 1020718ms GoodsController        GetGoodDetails     - ¬ходна€ строка имела неверный формат.
+ERROR 2016-10-17 15:02:38,760 1043832ms GoodsController        GetGoodDetails     - ¬ходна€ строка имела неверный формат.
+ERROR 2016-10-17 15:06:25,326 1270398ms GoodsController        GetGoodDetails     - ¬ходна€ строка имела неверный формат.
+ERROR 2016-10-17 15:06:34,028 1279100ms GoodsController        GetGoodDetails     - ¬ходна€ строка имела неверный формат.
+ERROR 2016-10-17 15:06:34,715 1279787ms GoodsController        GetGoodDetails     - ¬ходна€ строка имела неверный формат.
+ERROR 2016-10-17 15:58:17,999 4383071ms GoodsController        GetGoodDetails     - ¬ходна€ строка имела неверный формат.
+ERROR 2016-10-17 16:03:29,779 4694851ms GoodsController        GetGoodDetails     - ¬ходна€ строка имела неверный формат.
+ERROR 2016-10-17 16:05:22,838 4807910ms GoodsController        GetGoodDetails     - ¬ходна€ строка имела неверный формат.
