@@ -189,7 +189,7 @@ $().ready(function () {
                 success: function (data, textStatus, jqXHR) {
                     if (data.success) {
                         //form.preventDefault();
-                        $('#jqList').setGridParam({ url: goodListUrl, datatype: 'json', page: 1 }).trigger('reloadGrid');
+                        $('#jqList').setGridParam({ url: goodListUrl, datatype: 'json' }).trigger('reloadGrid');
                         $('#newGoodName').val('');
                         $('#newGoodPrice').val('');
                         $('#refresh_jqList').click();
@@ -357,7 +357,7 @@ function SaveRow() {
         data: postData,
         success: function (data, textStatus, jqXHR) {
             //alert(textStatus);
-            $('#jqList').setGridParam({ url: goodListUrl, datatype: 'json', page: 1 }).trigger('reloadGrid');
+            $('#jqList').setGridParam({ url: goodListUrl, datatype: 'json'/*, page: 1*/ }).trigger('reloadGrid');
             $('#refresh_jqList').click();
         },
         error: function (jqXHR, textStatus, errorThrown) {
@@ -394,10 +394,12 @@ function DeleteGood() {
         type: "POST",
     data: id,
     success: function (data, textStatus, jqXHR) {
+        //alert('success delete');
         //$('#goodsTable')./*trigger('reloadGrid').*/setGridParam({ url: '/Goods/GoodsList', datatype: 'json', page: 1 }).trigger('reloadGrid');
-        $("#goodsTable").jqGrid('setGridParam', { datatype: 'json' }).trigger('reloadGrid');
+        //$("#goodsTable").jqGrid('setGridParam', { datatype: 'json' }).trigger('reloadGrid');
+        $('#jqList').setGridParam({ url: goodListUrl, datatype: 'json'/*, page: 1*/ }).trigger('reloadGrid');
         $("#dialogDelete").dialog(opt3).dialog("close");
-        //$('#refresh_jqList').click();
+        $('#refresh_jqList').click();
     },
     error: function (jqXHR, textStatus, errorThrown) {
         alert(textStatus);
