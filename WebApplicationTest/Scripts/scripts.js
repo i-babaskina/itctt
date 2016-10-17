@@ -310,12 +310,12 @@ $().ready(function () {
                         window.location.replace("/Goods/Index");
                     }
                     else {
+                        $('#loginFormValidation').html(data.message);
                         $('#loginFormValidation').show();
-                        $('#loginFormValidation').html(data.responseText);
                     }
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
-                    alert("bad");
+                    //alert("bad");
                     alert(textStatus);
                 }
             });
@@ -334,7 +334,7 @@ $().ready(function () {
         },
         submitHandler: function (form) {
             var postData = $(form).serializeArray();
-            alert('smth');
+            //alert('smth');
             console.log(postData);
             var name = $('#movementGoodName').html();
             //postData["Name"] = name;

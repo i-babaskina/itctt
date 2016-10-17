@@ -211,6 +211,8 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\Converters.cs" />
+    <Compile Include="Helpers\Enums.cs" />
+    <Compile Include="Helpers\Results.cs" />
     <Compile Include="Migrations\201610121429594_InitialCreate.cs" />
     <Compile Include="Migrations\201610121429594_InitialCreate.Designer.cs">
       <DependentUpon>201610121429594_InitialCreate.cs</DependentUpon>
@@ -412,7 +414,6 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\Goods\Index1.cshtml" />
     <Content Include="Views\Account\LoginMy.cshtml" />
     <Content Include="Views\Goods\Index.cshtml" />
   </ItemGroup>

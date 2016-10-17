@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Helpers;
@@ -10,7 +11,7 @@ namespace WebApplicationTest.Providers
 {
     public class CustomMembershipProvider : MembershipProvider
     {
-        public override string ApplicationName
+        public override String ApplicationName
         {
             get
             {
@@ -23,7 +24,7 @@ namespace WebApplicationTest.Providers
             }
         }
 
-        public override bool EnablePasswordReset
+        public override Boolean EnablePasswordReset
         {
             get
             {
@@ -31,7 +32,7 @@ namespace WebApplicationTest.Providers
             }
         }
 
-        public override bool EnablePasswordRetrieval
+        public override Boolean EnablePasswordRetrieval
         {
             get
             {
@@ -39,7 +40,7 @@ namespace WebApplicationTest.Providers
             }
         }
 
-        public override int MaxInvalidPasswordAttempts
+        public override Int32 MaxInvalidPasswordAttempts
         {
             get
             {
@@ -47,7 +48,7 @@ namespace WebApplicationTest.Providers
             }
         }
 
-        public override int MinRequiredNonAlphanumericCharacters
+        public override Int32 MinRequiredNonAlphanumericCharacters
         {
             get
             {
@@ -55,7 +56,7 @@ namespace WebApplicationTest.Providers
             }
         }
 
-        public override int MinRequiredPasswordLength
+        public override Int32 MinRequiredPasswordLength
         {
             get
             {
@@ -63,7 +64,7 @@ namespace WebApplicationTest.Providers
             }
         }
 
-        public override int PasswordAttemptWindow
+        public override Int32 PasswordAttemptWindow
         {
             get
             {
@@ -79,7 +80,7 @@ namespace WebApplicationTest.Providers
             }
         }
 
-        public override string PasswordStrengthRegularExpression
+        public override String PasswordStrengthRegularExpression
         {
             get
             {
@@ -87,7 +88,7 @@ namespace WebApplicationTest.Providers
             }
         }
 
-        public override bool RequiresQuestionAndAnswer
+        public override Boolean RequiresQuestionAndAnswer
         {
             get
             {
@@ -95,7 +96,7 @@ namespace WebApplicationTest.Providers
             }
         }
 
-        public override bool RequiresUniqueEmail
+        public override Boolean RequiresUniqueEmail
         {
             get
             {
@@ -103,22 +104,22 @@ namespace WebApplicationTest.Providers
             }
         }
 
-        public override bool ChangePassword(string username, string oldPassword, string newPassword)
+        public override Boolean ChangePassword(String username, String oldPassword, String newPassword)
         {
             throw new NotImplementedException();
         }
 
-        public override bool ChangePasswordQuestionAndAnswer(string username, string password, string newPasswordQuestion, string newPasswordAnswer)
+        public override Boolean ChangePasswordQuestionAndAnswer(String username, String password, String newPasswordQuestion, String newPasswordAnswer)
         {
             throw new NotImplementedException();
         }
 
-        public override MembershipUser CreateUser(string username, string password, string email, string passwordQuestion, string passwordAnswer, bool isApproved, object providerUserKey, out MembershipCreateStatus status)
+        public override MembershipUser CreateUser(String username, String password, String email, String passwordQuestion, String passwordAnswer, Boolean isApproved, Object providerUserKey, out MembershipCreateStatus status)
         {
             throw new NotImplementedException();
         }
 
-        public MembershipUser CreateUser(string username, string password)
+        public MembershipUser CreateUser(String username, String password)
         {
             MembershipUser memberUser = GetUser(username, false);
             if (memberUser == null)
@@ -131,7 +132,7 @@ namespace WebApplicationTest.Providers
                         user.Login = username;
                         user.Password = Crypto.HashPassword(password);
                         user.RoleId = 1;
-                        var roles = context.Roles;
+                        DbSet<Role> roles = context.Roles;
                         user.Role = context.Roles.Where(x => x.Id == 1).FirstOrDefault();
                         context.Users.Add(user);
                         context.SaveChanges();
@@ -148,37 +149,37 @@ namespace WebApplicationTest.Providers
             return null;
         }
 
-        public override bool DeleteUser(string username, bool deleteAllRelatedData)
+        public override Boolean DeleteUser(String username, Boolean deleteAllRelatedData)
         {
             throw new NotImplementedException();
         }
 
-        public override MembershipUserCollection FindUsersByEmail(string emailToMatch, int pageIndex, int pageSize, out int totalRecords)
+        public override MembershipUserCollection FindUsersByEmail(String emailToMatch, Int32 pageIndex, Int32 pageSize, out Int32 totalRecords)
         {
             throw new NotImplementedException();
         }
 
-        public override MembershipUserCollection FindUsersByName(string usernameToMatch, int pageIndex, int pageSize, out int totalRecords)
+        public override MembershipUserCollection FindUsersByName(String usernameToMatch, Int32 pageIndex, Int32 pageSize, out Int32 totalRecords)
         {
             throw new NotImplementedException();
         }
 
-        public override MembershipUserCollection GetAllUsers(int pageIndex, int pageSize, out int totalRecords)
+        public override MembershipUserCollection GetAllUsers(Int32 pageIndex, Int32 pageSize, out Int32 totalRecords)
         {
             throw new NotImplementedException();
         }
 
-        public override int GetNumberOfUsersOnline()
+        public override Int32 GetNumberOfUsersOnline()
         {
             throw new NotImplementedException();
         }
 
-        public override string GetPassword(string username, string answer)
+        public override String GetPassword(String username, String answer)
         {
             throw new NotImplementedException();
         }
 
-        public override MembershipUser GetUser(string username, bool userIsOnline)
+        public override MembershipUser GetUser(String username, Boolean userIsOnline)
         {
             try
             {
@@ -198,22 +199,22 @@ namespace WebApplicationTest.Providers
             return null;
         }
 
-        public override MembershipUser GetUser(object providerUserKey, bool userIsOnline)
+        public override MembershipUser GetUser(Object providerUserKey, Boolean userIsOnline)
         {
             throw new NotImplementedException();
         }
 
-        public override string GetUserNameByEmail(string email)
+        public override String GetUserNameByEmail(String email)
         {
             throw new NotImplementedException();
         }
 
-        public override string ResetPassword(string username, string answer)
+        public override String ResetPassword(String username, String answer)
         {
             throw new NotImplementedException();
         }
 
-        public override bool UnlockUser(string userName)
+        public override Boolean UnlockUser(String userName)
         {
             throw new NotImplementedException();
         }
@@ -223,9 +224,9 @@ namespace WebApplicationTest.Providers
             throw new NotImplementedException();
         }
 
-        public override bool ValidateUser(string username, string password)
+        public override Boolean ValidateUser(String username, String password)
         {
-            bool isValid = false;
+            Boolean isValid = false;
 
             using (UserContext context = new UserContext())
             {

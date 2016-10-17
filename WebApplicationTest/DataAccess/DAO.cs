@@ -3,13 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using WebApplicationTest.Models;
+using WebApplicationTest.Helpers;
 
 namespace WebApplicationTest.DataAccess
 {
     public static class DAO
     {
-        private const String COMING = "Coming";
-        private const String CONSUMPTION = "Consumption";
         private const String MOVEMENTS = "Movements";
 
         public static List<Good> GetAllGoods()
@@ -22,149 +21,179 @@ namespace WebApplicationTest.DataAccess
             return goods;
         }
 
-        public static bool AddGood(Good good)
+        public static void AddGood(Good good)
         {
-            using (GoodsContext context = new GoodsContext())
+            try
             {
-                context.Set<Good>().Add(good);
-                context.SaveChanges();
-                return true;
+                using (GoodsContext context = new GoodsContext())
+                {
+                    context.Set<Good>().Add(good);
+                    context.SaveChanges();
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
             }
         }
 
         public static void UpdateGood(Good good)
         {
-            using (GoodsContext context = new GoodsContext())
+            try
             {
-                context.Entry<Good>(good).State = System.Data.Entity.EntityState.Modified;
-                context.SaveChanges();
+                using (GoodsContext context = new GoodsContext())
+                {
+                    context.Entry<Good>(good).State = System.Data.Entity.EntityState.Modified;
+                    context.SaveChanges();
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
             }
         }
 
-        public static bool DeleteGood(Int32 id)
+        public static void DeleteGood(Int32 id)
         {
-            using (GoodsContext context = new GoodsContext())
+            try
             {
-                Good good = GetGoodById(id);
-                if (good == null) return false;
-                context.Entry<Good>(good).State = System.Data.Entity.EntityState.Deleted;
-                context.SaveChanges();
-                return true;
+                using (GoodsContext context = new GoodsContext())
+                {
+                    Good good = GetGoodById(id);
+                    context.Entry<Good>(good).State = System.Data.Entity.EntityState.Deleted;
+                    context.SaveChanges();
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
             }
         }
 
-        public static bool AddMovement(Movement movement)
+        public static Boolean AddMovement(Movement movement)
         {
-            //TODO: remove null cheking after fixing validation
-            if (movement != null)
+            Int32 commonCount = GetAllCount(movement.GoodId);
+            if (String.Equals(movement.Type, Types.Consumption) && commonCount < movement.Amount)
+               return false;
+            try
             {
-                Int32 commonCount = GetAllCount(movement.GoodId);
-                if (String.Equals(movement.Type, CONSUMPTION) && commonCount < movement.Amount)
-                    return false;
                 using (GoodsContext context = new GoodsContext())
                 {
                     context.Set<Movement>().Add(movement);
                     context.SaveChanges();
-                    var all = context.Set<Movement>().ToList<Movement>();
                     return true;
                 }
             }
-            else return false;
+            catch (Exception e)
+            {
+                throw e;
+            }
+
         }
 
         public static List<Movement> GetMovementsByGoodId(Int32 goodId)
         {
-            List<Movement> result = new List<Movement>();
-            using (GoodsContext context = new GoodsContext())
+            try
             {
-                var mov = context.Set<Movement>().ToList<Movement>();
-                result = context.Set<Movement>().Where(x => x.GoodId == goodId).ToList<Movement>();
+                List<Movement> result = new List<Movement>();
+                using (GoodsContext context = new GoodsContext())
+                {
+                    var mov = context.Set<Movement>().ToList<Movement>();
+                    result = context.Set<Movement>().Where(x => x.GoodId == goodId).ToList<Movement>();
+                }
+                return result;
             }
-            return result;
+            catch (Exception e)
+            {
+                throw e;
+            }
         }
 
         public static Good GetGoodById(Int32 goodId)
         {
-            Good good = new Good();
-            using (GoodsContext context = new GoodsContext())
+            try
             {
-                good = context.Set<Good>().Find(goodId);
+                Good good = new Good();
+
+                using (GoodsContext context = new GoodsContext())
+                {
+                    good = context.Set<Good>().Find(goodId);
+                }
+
+                return good;
             }
-            return good;
+            catch (Exception e)
+            {
+                throw e;
+            }
         }
 
         public static Good GetGoodByName(String name)
         {
-            Good good = new Good();
-            using (GoodsContext context = new GoodsContext())
+            try
             {
-                good = context.Set<Good>().Where(x => String.Equals(x.Name, name)).FirstOrDefault();
+                Good good = new Good();
+                using (GoodsContext context = new GoodsContext())
+                {
+                    good = context.Set<Good>().Where(x => String.Equals(x.Name, name)).FirstOrDefault();
+                }
+                return good;
             }
-            return good;
+            catch (Exception e)
+            {
+                throw e;
+            }
         }
 
-        public static Int32 GetComingCount(Int32 goodId)
+        public static Int32 GetCountByType(Int32 goodId, Types type)
         {
-            Int32 result = 0;
-            using (GoodsContext context = new GoodsContext())
+            try
             {
-                IQueryable<Movement> movements = context.Set<Movement>().Where(x => x.GoodId == goodId && String.Equals(x.Type, COMING));
-                result = movements.Count() == 0 ? 0 : movements.Sum(s => s.Amount);
-            }
-            return result;
-        }
+                Int32 result = 0;
 
-        public static Int32 GetConsumptionCount(Int32 goodId)
-        {
-            Int32 result = 0;
-            using (GoodsContext context = new GoodsContext())
-            {
-                IQueryable<Movement> movements = context.Set<Movement>().Where(x => x.GoodId == goodId && String.Equals(x.Type, CONSUMPTION));
-                result = movements.Count() == 0 ? 0 : movements.Sum(s => s.Amount);
+                using (GoodsContext context = new GoodsContext())
+                {
+                    IQueryable<Movement> movements = context.Set<Movement>().Where(x => x.GoodId == goodId && String.Equals(x.Type, type));
+                    result = movements?.Count() == 0 ? 0 : movements.Sum(s => s.Amount);
+                }
+
+                return result;
             }
-            return result;
+            catch (Exception e)
+            {
+                throw e;
+            }
         }
 
         public static Int32 GetAllCount(Int32 goodId)
         {
-            Int32 result = GetComingCount(goodId) - GetConsumptionCount(goodId);
-            return result;
-        }
-
-        public static Double CalculateAllPrice(Int32 goodId)
-        {
-            Double result = GetAllCount(goodId) * GetGoodPrice(goodId);
-            return result;
-        }
-
-        private static Double GetGoodPrice(int goodId)
-        {
-            Double result = 0;
-            using (GoodsContext context = new GoodsContext())
+            try
             {
-                result = context.Set<Good>().Find(goodId).Price;
+                Int32 result = GetCountByType(goodId, Types.Coming) - GetCountByType(goodId, Types.Consumption);
+                return result;
             }
-            return result;
+            catch (Exception e)
+            {
+                throw e;
+            }
         }
 
-        public static List<Movement> GetAllComings(Int32 goodId)
+        public static List<Movement> GetAllMovementsByType(Int32 goodId, Types type)
         {
-            List<Movement> result = new List<Movement>();
-            using (GoodsContext context = new GoodsContext())
+            try
             {
-                result = context.Set<Movement>().Where(x => x.GoodId == goodId && String.Equals(x.Type, COMING)).ToList<Movement>();
+                List<Movement> result = new List<Movement>();
+                using (GoodsContext context = new GoodsContext())
+                {
+                    result = context.Set<Movement>().Where(x => x.GoodId == goodId && String.Equals(x.Type, type)).ToList<Movement>();
+                }
+                return result;
             }
-            return result;
+            catch (Exception e)
+            {
+                throw e;
+            }
         }
 
-        public static List<Movement> GetAllConsumptions(Int32 goodId)
-        {
-            List<Movement> result = new List<Movement>();
-            using (GoodsContext context = new GoodsContext())
-            {
-                result = context.Set<Movement>().Where(x => x.GoodId == goodId && String.Equals(x.Type, CONSUMPTION)).ToList<Movement>();
-            }
-            return result;
-        }
     }
 }
