@@ -23,3 +23,13 @@ ERROR 2016-10-18 09:06:27,949 251010ms GoodsController        GetGoodDetails    
 ERROR 2016-10-18 09:07:50,747 333808ms GoodsController        GetGoodDetails     - ¬ходна€ строка имела неверный формат.
 ERROR 2016-10-18 09:09:24,187 427248ms GoodsController        GetGoodDetails     - ¬ходна€ строка имела неверный формат.
 ERROR 2016-10-18 09:15:51,003 814064ms GoodsController        GetGoodDetails     - ¬ходна€ строка имела неверный формат.
+ERROR 2016-10-18 10:30:22,162 754946ms GoodsController        GetGoodDetails     - System.FormatException: ¬ходна€ строка имела неверный формат.
+   в System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   в System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   в System.Int32.Parse(String s)
+   в WebApplicationTest.Controllers.GoodsController.GetGoodDetails() в C:\Users\iryna\documents\visual studio 2015\Projects\WebApplicationTest\WebApplicationTest\Controllers\GoodsController.cs:строка 144
+ERROR 2016-10-18 10:30:58,111 790895ms GoodsController        GetGoodDetails     - System.FormatException: ¬ходна€ строка имела неверный формат.
+   в System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   в System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   в System.Int32.Parse(String s)
+   в WebApplicationTest.Controllers.GoodsController.GetGoodDetails() в C:\Users\iryna\documents\visual studio 2015\Projects\WebApplicationTest\WebApplicationTest\Controllers\GoodsController.cs:строка 144

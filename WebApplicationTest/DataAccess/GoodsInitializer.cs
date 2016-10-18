@@ -23,10 +23,12 @@ namespace WebApplicationTest.DataAccess
 
         //    List<Movement> movementsList = new List<Movement>()
         //    {
-        //        new Movement() { Id = 1, Type = "Coming", Amount = 3, GoodId = 1, Good = goodList.Find(x => x.Id == 1), User = "User1", Date = DateTime.Now },
-        //        new Movement() { Id = 1, Type = "Consumption", Amount = 1, GoodId = 1, Good = goodList.Find(x => x.Id == 1), User = "User1", Date = DateTime.Now }
+        //        new Movement() { Id = 1, Type = "Coming", Amount = 3, GoodId = 1, User = "testuser", Date = DateTime.Now },
+        //        new Movement() { Id = 1, Type = "Consumption", Amount = 1, GoodId = 1, User = "testuser", Date = DateTime.Now }
         //    };
 
+        //    movementsList.ForEach(x => context.Movements.Add(x));
+        //    context.SaveChanges();
         //}
     }
 }

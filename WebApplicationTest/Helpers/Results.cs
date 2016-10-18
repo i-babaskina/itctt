@@ -8,7 +8,7 @@ namespace WebApplicationTest.Helpers
 {
     public class Results
     {
-        public const String SMTH_WRONG = "Something wrong.";
+        public const String SMTH_WRONG = "Something wrong. Watch loggs for details.";
 
         public static JsonResult ErrorResult()
         {

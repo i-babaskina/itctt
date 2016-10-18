@@ -38,7 +38,7 @@ namespace WebApplicationTest.Controllers
             }
             catch (Exception e)
             {
-                logger.Error(e.Message);
+                logger.Error(e.ToString());
                 return Results.SMTH_WRONG;
             }
         }
@@ -61,7 +61,7 @@ namespace WebApplicationTest.Controllers
             }
             catch (Exception e)
             {
-                logger.Error(e.Message);
+                logger.Error(e.ToString());
                 return Results.ErrorResult();
             }
 
@@ -77,7 +77,7 @@ namespace WebApplicationTest.Controllers
             }
             catch (Exception e)
             {
-                logger.Error(e.Message);
+                logger.Error(e.ToString());
                 return Results.ErrorResult();
             }
         }
@@ -94,7 +94,7 @@ namespace WebApplicationTest.Controllers
             }
             catch (Exception e)
             {
-                logger.Error(e.Message);
+                logger.Error(e.ToString());
                 result = Results.SMTH_WRONG;
             } 
 
@@ -113,7 +113,7 @@ namespace WebApplicationTest.Controllers
             }
             catch (Exception e)
             {
-                logger.Error(e.Message);
+                logger.Error(e.ToString());
                 return Results.ErrorResult();
             }
         }
@@ -130,7 +130,7 @@ namespace WebApplicationTest.Controllers
             }
             catch (Exception e)
             {
-                logger.Error(e.Message);
+                logger.Error(e.ToString());
                 return Results.ErrorResult();
             }
         }
@@ -156,7 +156,7 @@ namespace WebApplicationTest.Controllers
             }
             catch (Exception e)
             {
-                logger.Error(e.Message);
+                logger.Error(e.ToString());
                 return Results.ErrorResult();
             }
         }
@@ -172,7 +172,7 @@ namespace WebApplicationTest.Controllers
             }
             catch(Exception e)
             {
-                logger.Error(e.Message);
+                logger.Error(e.ToString());
                 return Results.ErrorResult();
             }
         }

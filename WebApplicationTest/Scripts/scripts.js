@@ -295,7 +295,6 @@ $("#statBtnClose").click(function () {
                 //alert('smth');
                 console.log(postData);
                 var name = $('#movementGoodName').html();
-                //postData["Name"] = name;
                 postData.push({ name: "Name", value: name });
                 var currentdate = new Date();
                 var datetime = currentdate.getDate() + "-"
