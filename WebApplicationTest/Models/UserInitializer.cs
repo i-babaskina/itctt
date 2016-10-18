@@ -10,6 +10,14 @@ namespace WebApplicationTest.Models
     {
         protected override void Seed(UserContext context)
         {
+            List<Role> rolesList = new List<Role>()
+            {
+                new Role() { Id = 1, Name = "user"}
+            };
+
+            rolesList.ForEach(x => context.Roles.Add(x));
+            context.SaveChanges();
+
             List<User> goodList = new List<User>()
             {
                 new User() { Id = 1, Login = "testuser", Password = Crypto.HashPassword("123456"), RoleId = 1 },
@@ -17,14 +25,6 @@ namespace WebApplicationTest.Models
             };
 
             goodList.ForEach(x => context.Users.Add(x));
-            context.SaveChanges();
-
-            List<Role> rolesList = new List<Role>()
-            {
-                new Role() { Id = 1, Name = "user"}
-            };
-
-            rolesList.ForEach(x => context.Roles.Add(x));
             context.SaveChanges();
         }
     }
