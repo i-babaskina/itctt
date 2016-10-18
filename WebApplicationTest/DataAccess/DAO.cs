@@ -45,8 +45,14 @@ namespace WebApplicationTest.DataAccess
         {
             List<Good> goodList = GetGoodsByName(good.Name);
 
-            if (goodList.Count > 1) return false;
-            else if (goodList.Count == 1 && goodList[0].Id != good.Id) return false;
+            if (goodList.Count > 1)
+            {
+                return false;
+            }
+            else if (goodList.Count == 1 && goodList[0].Id != good.Id)
+            {
+                return false;
+            }
             
             try
             {
@@ -95,7 +101,6 @@ namespace WebApplicationTest.DataAccess
                 {
                     context.Set<Movement>().Add(movement);
                     context.SaveChanges();
-                    return true;
                 }
             }
             catch (Exception e)
@@ -103,102 +108,102 @@ namespace WebApplicationTest.DataAccess
                 throw e;
             }
 
+            return true;
         }
 
         public static List<Movement> GetMovementsByGoodId(Int32 goodId)
         {
+            List<Movement> result = new List<Movement>();
+
             try
             {
-                List<Movement> result = new List<Movement>();
-
                 using (GoodsContext context = new GoodsContext())
                 {
                     result = context.Set<Movement>().Where(x => x.GoodId == goodId).ToList<Movement>();
                 }
-
-                return result;
             }
             catch (Exception e)
             {
                 throw e;
             }
+
+            return result;
         }
 
         public static Good GetGoodById(Int32 goodId)
         {
+            Good good = new Good();
+
             try
             {
-                Good good = new Good();
-
                 using (GoodsContext context = new GoodsContext())
                 {
                     good = context.Set<Good>().Find(goodId);
                 }
-
-                return good;
             }
             catch (Exception e)
             {
                 throw e;
             }
+
+            return good;
         }
 
         public static Good GetGoodByName(String name)
         {
+            Good good = new Good();
+
             try
             {
-                Good good = new Good();
-
                 using (GoodsContext context = new GoodsContext())
                 {
                     good = context.Set<Good>().Where(x => String.Equals(x.Name, name)).FirstOrDefault();
                 }
-
-                return good;
             }
             catch (Exception e)
             {
                 throw e;
             }
+
+            return good;
         }
 
         public static List<Good> GetGoodsByName(String name)
         {
+            List<Good> good = new List<Good>();
             try
-            {
-                List<Good> good = new List<Good>();
-
+            { 
                 using (GoodsContext context = new GoodsContext())
                 {
                     good = context.Set<Good>().Where(x => String.Equals(x.Name, name)).ToList<Good>();
                 }
-
-                return good;
             }
             catch (Exception e)
             {
                 throw e;
             }
+
+            return good;
         }
 
         public static Int32 GetCountByType(Int32 goodId, String type)
         {
+            Int32 result = 0;
+
             try
             {
-                Int32 result = 0;
-
                 using (GoodsContext context = new GoodsContext())
                 {
                     IQueryable<Movement> movements = context.Set<Movement>().Where(x => x.GoodId == goodId && String.Equals(x.Type, type));
                     result = movements?.Count() == 0 ? 0 : movements.Sum(s => s.Amount);
                 }
 
-                return result;
             }
             catch (Exception e)
             {
                 throw e;
             }
+            return result;
         }
 
         public static Int32 GetAllCount(Int32 goodId)
@@ -216,21 +221,21 @@ namespace WebApplicationTest.DataAccess
          
         public static List<Movement> GetAllMovementsByType(Int32 goodId, String type)
         {
+            List<Movement> result = new List<Movement>();
+
             try
             {
-                List<Movement> result = new List<Movement>();
-
                 using (GoodsContext context = new GoodsContext())
                 {
                     result = context.Set<Movement>().Where(x => x.GoodId == goodId && String.Equals(x.Type, type)).ToList<Movement>();
                 }
-
-                return result;
             }
             catch (Exception e)
             {
                 throw e;
             }
+
+            return result;
         }
 
     }

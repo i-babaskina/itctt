@@ -26,21 +26,21 @@ namespace WebApplicationTest.Controllers
 
         public String GoodsList()
         {
+            String result = String.Empty;
             try
             {
-                String result = String.Empty;
                 List<Good> goods = DAO.GetAllGoods();
                 result = JsonConvert.SerializeObject(goods, new JsonSerializerSettings
                 {
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore
                 });
-                return result;
             }
             catch (Exception e)
             {
                 logger.Error(e.ToString());
                 return Results.SMTH_WRONG;
             }
+            return result;
         }
 
         public ActionResult AddGood()
@@ -57,13 +57,13 @@ namespace WebApplicationTest.Controllers
             try
             {
                 DAO.AddGood(good);
-                return Json(new { success = true, responseText = "Good successfulu added." }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception e)
             {
                 logger.Error(e.ToString());
                 return Results.ErrorResult();
             }
+            return Json(new { success = true, responseText = "Good successfulu added." }, JsonRequestBehavior.AllowGet);
 
         }
 
@@ -73,13 +73,13 @@ namespace WebApplicationTest.Controllers
             {
                 String id = Converters.ConvertInputStreamToString(Request.InputStream);
                 DAO.DeleteGood(Int32.Parse(id));
-                return Json(new { success = true}, JsonRequestBehavior.AllowGet);
             }
             catch (Exception e)
             {
                 logger.Error(e.ToString());
                 return Results.ErrorResult();
             }
+            return Json(new { success = true }, JsonRequestBehavior.AllowGet);
         }
 
         public String GetAllMovementsForGood(String goodId)
@@ -103,56 +103,62 @@ namespace WebApplicationTest.Controllers
 
         public ActionResult Update()
         {
+            Boolean isUpdate = false;
             try
             {
                 String updateInfo = Converters.ConvertInputStreamToString(Request.InputStream);
                 Good good = Converters.ConvertJqGridInputToGood(updateInfo);
-                Boolean isUpdate = DAO.UpdateGood(good);
-                String message = (isUpdate) ? "Good successfuly added." : "Good with this name alredy exist.";
-                return Json( new { success = isUpdate, message = message }, JsonRequestBehavior.AllowGet);
+                isUpdate = DAO.UpdateGood(good);
             }
             catch (Exception e)
             {
                 logger.Error(e.ToString());
                 return Results.ErrorResult();
             }
+
+            String message = (isUpdate) ? "Good successfuly added." : "Good with this name alredy exist.";
+            return Json(new { success = isUpdate, message = message }, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult AddMovement()
         {
             String updateInfo = Converters.ConvertInputStreamToString(Request.InputStream);
             Movement movement = Converters.ConvertJqGridInputToMovement(updateInfo);
+            Boolean isAdded = false;
 
             try
             {
-                Boolean isAdded = DAO.AddMovement(movement);
-                return Json(new { success = isAdded, responseText = (isAdded ? "Added successful." : "The are not enought good's amount.") }, JsonRequestBehavior.AllowGet);
+                isAdded = DAO.AddMovement(movement);
             }
             catch (Exception e)
             {
                 logger.Error(e.ToString());
                 return Results.ErrorResult();
             }
+
+            return Json(new { success = isAdded, responseText = (isAdded ? "Added successful." : "The are not enought good's amount.") }, JsonRequestBehavior.AllowGet);
         }
         
         public ActionResult GetGoodDetails()
         {
             String updateInfo = Converters.ConvertInputStreamToString(Request.InputStream);
+            Good good = new Good();
 
             try
             {
                 Int32 goodId = Int32.Parse(updateInfo);
-                Good good = new Good();
                 good = DAO.GetGoodById(goodId);
 
                 if (good != null)
                 {
                     Int32 amount = DAO.GetAllCount(goodId);
                     Double price = good.Price * amount;
-                    return Json(new { Id = good.Id, Name = good.Name, Price = good.Price, Amount = amount, TotalPrice = price }, JsonRequestBehavior.AllowGet);
+                    return Json(new { success = true, Id = good.Id, Name = good.Name, Price = good.Price, Amount = amount, TotalPrice = price }, JsonRequestBehavior.AllowGet);
                 }
-
-                else return Json(new { success = false, message = "Can't find good." }, JsonRequestBehavior.AllowGet);
+                else
+                {
+                    return Json(new { success = false, message = "Can't find good." }, JsonRequestBehavior.AllowGet);
+                }
             }
             catch (Exception e)
             {
@@ -164,17 +170,19 @@ namespace WebApplicationTest.Controllers
         public ActionResult GetGoodMovement(String inputId)
         {
             Int32 goodId = Int32.Parse(inputId);
+            List<Movement> result = new List<Movement>(); 
 
             try
             {
-                List<Movement> result = DAO.GetMovementsByGoodId(goodId);
-                return Json(result);
+                result = DAO.GetMovementsByGoodId(goodId);
             }
             catch(Exception e)
             {
                 logger.Error(e.ToString());
                 return Results.ErrorResult();
             }
+
+            return Json(result);
         }
         
     }

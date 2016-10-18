@@ -66,8 +66,13 @@ namespace WebApplicationTest.Helpers
 
             Movement movement = new Movement();
             movement.Amount = Int32.Parse(mvmAttributes["Amount"]);
-            String date = mvmAttributes["Date"].Replace("%3A", TIME_SEPARATOR.ToString()).Replace("+", " ");
-            if (date.Length != 19) date = ValidateDate(date); 
+            String date = Uri.UnescapeDataString(mvmAttributes["Date"].Replace('+', DATETIME_SEPARATOR));
+
+            if (date.Length != 19)
+            {
+                date = TrySupplementToValideDate(date);
+            }
+
             movement.Date = DateTime.ParseExact(date, DATETIME_FORMAT, ci);
             movement.Type = mvmAttributes["Type"];
             movement.GoodId = DAO.GetGoodByName(mvmAttributes["Name"]).Id;
@@ -75,11 +80,22 @@ namespace WebApplicationTest.Helpers
             return movement;
         }
 
-        private static String ValidateDate(String date)
+        private static String TrySupplementToValideDate(String date)
         {
+            if (String.IsNullOrEmpty(date))
+            {
+                throw new NullReferenceException("Input date is null or empty");
+            }
+            if (date.IndexOf(DATETIME_SEPARATOR) == -1)
+            {
+                throw new FormatException("Invalid datetime format.");
+            }
             String[] splitDateTime = date.Split(DATETIME_SEPARATOR);
+            if (splitDateTime[0].IndexOf(DATE_SEPARATOR) == -1)
+            {
+                throw new FormatException("Invalid date format.");
+            }
             String[] splitDate = new String[3];
-            String[] splitTime = new String[3];
             splitDate = splitDateTime[0].Split(DATE_SEPARATOR);
             if (splitDateTime[0].Length != 10)
             {
@@ -87,6 +103,11 @@ namespace WebApplicationTest.Helpers
                 if (splitDate[1].Length != 2) splitDate[1] = String.Concat(NULL_CHAR, splitDate[1]);
             }
 
+            if (splitDateTime[1].IndexOf(TIME_SEPARATOR) == -1)
+            {
+                throw new FormatException("Invalid time format.");
+            }
+            String[] splitTime = new String[3];
             splitTime = splitDateTime[1].Split(TIME_SEPARATOR);
             if (splitDateTime[1].Length != 8)
             {
