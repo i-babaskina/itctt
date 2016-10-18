@@ -1,6 +1,7 @@
 INFO  2016-10-17 11:17:38,107 15091ms GoodsController        Index              - start logging
 ERROR 2016-10-17 11:26:15,194 48474ms GoodsController        DeleteGood         - «начение не может быть неопределенным.
-»м€ параметра: entityERROR 2016-10-17 13:45:51,916 97991ms GoodsController        GetGoodDetails     - ¬ходна€ строка имела неверный формат.
+»м€ параметра: entity
+ERROR 2016-10-17 13:45:51,916 97991ms GoodsController        GetGoodDetails     - ¬ходна€ строка имела неверный формат.
 ERROR 2016-10-17 13:46:20,459 126534ms GoodsController        GetGoodDetails     - ¬ходна€ строка имела неверный формат.
 ERROR 2016-10-17 15:01:08,048 953120ms GoodsController        GetGoodDetails     - ¬ходна€ строка имела неверный формат.
 ERROR 2016-10-17 15:01:13,402 958474ms GoodsController        GetGoodDetails     - ¬ходна€ строка имела неверный формат.
@@ -16,3 +17,9 @@ ERROR 2016-10-17 16:03:29,779 4694851ms GoodsController        GetGoodDetails   
 ERROR 2016-10-17 16:05:22,838 4807910ms GoodsController        GetGoodDetails     - ¬ходна€ строка имела неверный формат.
 ERROR 2016-10-17 18:21:09,280 1142196ms GoodsController        GetGoodDetails     - ¬ходна€ строка имела неверный формат.
 ERROR 2016-10-17 18:21:51,063 1183980ms GoodsController        GetGoodDetails     - ¬ходна€ строка имела неверный формат.
+ERROR 2016-10-18 09:04:46,112 149173ms GoodsController        GetGoodDetails     - ¬ходна€ строка имела неверный формат.
+ERROR 2016-10-18 09:05:26,794 189855ms GoodsController        GetGoodDetails     - ¬ходна€ строка имела неверный формат.
+ERROR 2016-10-18 09:06:27,949 251010ms GoodsController        GetGoodDetails     - ¬ходна€ строка имела неверный формат.
+ERROR 2016-10-18 09:07:50,747 333808ms GoodsController        GetGoodDetails     - ¬ходна€ строка имела неверный формат.
+ERROR 2016-10-18 09:09:24,187 427248ms GoodsController        GetGoodDetails     - ¬ходна€ строка имела неверный формат.
+ERROR 2016-10-18 09:15:51,003 814064ms GoodsController        GetGoodDetails     - ¬ходна€ строка имела неверный формат.

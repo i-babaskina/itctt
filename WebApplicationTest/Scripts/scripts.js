@@ -179,7 +179,7 @@ $("#statBtnClose").click(function () {
     jQuery.validator.addMethod(
         "money",
         function(value, element) {
-            var isValidMoney = /^\d{0,10}(\.\d{0,2})?$/.test(value);
+            var isValidMoney = /^\d{0,10}(\.\d{0,3})?$/.test(value);
             return this.optional(element) || isValidMoney;
         },
         "Ivalid price value"
@@ -191,10 +191,16 @@ $("#statBtnClose").click(function () {
             return this.optional(element) || /^[a-z0-9_\-" "]+$/i.test(value);
         }, "Letters, digits, spaces, - and _ only please");
 
+    jQuery.validator.addMethod(
+        "notstartsfromspace",
+        function (value, element) {
+            return this.optional(element) || !(/^ +/i.test(value));
+        }, "Name can\'t starts from space");
+
     $().ready(function () {
         $("#addGoodForm").validate({
             rules: {
-                Name: { required: true, maxlength: 50, lettersonly: true },
+                Name: { required: true, maxlength: 50, notstartsfromspace: true, lettersonly: true },
                 Price: { required: true, money: true, max: 10000, min: 0.01 }
             },
             messages: {
@@ -338,8 +344,6 @@ $("#statBtnClose").click(function () {
         if (selectedRowId == null) alert('select row pleace');
         else {
             $("#jqList").jqGrid('editRow', selectedRowId);
-            $('#' + selectedRowId + '_Name').wrap('<form id=\'updateGoodFormName\'></form>');
-            $('#' + selectedRowId + '_Price').wrap('<form id=\'updateGoodFormPrice\'></form>');
             this.disabled = 'true';
             $("#saveBtn,#cancelBtn").attr("disabled", false);
             $("#saveBtn").removeClass("btn btn-default").addClass("btn btn-success");
@@ -354,15 +358,21 @@ $("#statBtnClose").click(function () {
         var newName = $('#' + selectedRowId + "_Name").val();
         var newPrice = $('#' + selectedRowId + "_Price").val();
         var regexName = /^[a-z0-9_\-" "]+$/i;
-        var regexPrice = /^\d{0,6}(\.\d{0,2})?$/;
+        var regexPrice = /^\d{0,6}(\.\d{0,3})?$/;
         var isNameValid = false, isPriceValid = false;
         $('#' + selectedRowId + "_Name").next().remove();
+        $('#' + selectedRowId + "_Name").next().remove();
         $('#' + selectedRowId + "_Price").next().remove();
+        $('#' + selectedRowId + "_Price").next().remove();
+        $('#editGoodValidation').remove();
         if (!regexName.test(newName)) {
             $('#' + selectedRowId + "_Name").after('<br><b>Letters, digits, spaces,<br> - and _ only</b>');
         }
         else if (newName.length > 50 || newName.length < 1) {
             $('#' + selectedRowId + "_Name").after('<br><b>Length must be betwen 1 <br>and 50 chars</b>');
+        }
+        else if (newName[0] == " ") {
+            $('#' + selectedRowId + "_Name").after('<br><b>Name can\'t starts from space</b>');
         }
         else isNameValid = true;
 
