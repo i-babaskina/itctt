@@ -35,9 +35,9 @@ namespace WebApplicationTest.DataAccess
                     context.SaveChanges();
                 }
             }
-            catch (Exception e)
+            catch (Exception exeption)
             {
-                throw e;
+                throw;
             }
         }
 
@@ -63,9 +63,9 @@ namespace WebApplicationTest.DataAccess
                     return true;
                 }
             }
-            catch (Exception e)
+            catch (Exception exeption)
             {
-                throw e;
+                throw;
             }
         }
 
@@ -80,9 +80,9 @@ namespace WebApplicationTest.DataAccess
                     context.SaveChanges();
                 }
             }
-            catch (Exception e)
+            catch (Exception exception)
             {
-                throw e;
+                throw;
             }
         }
 
@@ -103,9 +103,9 @@ namespace WebApplicationTest.DataAccess
                     context.SaveChanges();
                 }
             }
-            catch (Exception e)
+            catch (Exception exception)
             {
-                throw e;
+                throw;
             }
 
             return true;
@@ -122,9 +122,9 @@ namespace WebApplicationTest.DataAccess
                     result = context.Set<Movement>().Where(x => x.GoodId == goodId).ToList<Movement>();
                 }
             }
-            catch (Exception e)
+            catch (Exception exception)
             {
-                throw e;
+                throw;
             }
 
             return result;
@@ -141,9 +141,9 @@ namespace WebApplicationTest.DataAccess
                     good = context.Set<Good>().Find(goodId);
                 }
             }
-            catch (Exception e)
+            catch (Exception exception)
             {
-                throw e;
+                throw;
             }
 
             return good;
@@ -160,9 +160,9 @@ namespace WebApplicationTest.DataAccess
                     good = context.Set<Good>().Where(x => String.Equals(x.Name, name)).FirstOrDefault();
                 }
             }
-            catch (Exception e)
+            catch (Exception exception)
             {
-                throw e;
+                throw;
             }
 
             return good;
@@ -178,9 +178,9 @@ namespace WebApplicationTest.DataAccess
                     good = context.Set<Good>().Where(x => String.Equals(x.Name, name)).ToList<Good>();
                 }
             }
-            catch (Exception e)
+            catch (Exception exception)
             {
-                throw e;
+                throw;
             }
 
             return good;
@@ -199,9 +199,9 @@ namespace WebApplicationTest.DataAccess
                 }
 
             }
-            catch (Exception e)
+            catch (Exception exception)
             {
-                throw e;
+                throw;
             }
             return result;
         }
@@ -213,9 +213,9 @@ namespace WebApplicationTest.DataAccess
                 Int32 result = GetCountByType(goodId, COMING) - GetCountByType(goodId, CONSUMPTION);
                 return result;
             }
-            catch (Exception e)
+            catch (Exception exception)
             {
-                throw e;
+                throw;
             }
         }
          
@@ -230,9 +230,9 @@ namespace WebApplicationTest.DataAccess
                     result = context.Set<Movement>().Where(x => x.GoodId == goodId && String.Equals(x.Type, type)).ToList<Movement>();
                 }
             }
-            catch (Exception e)
+            catch (Exception exception)
             {
-                throw e;
+                throw;
             }
 
             return result;
