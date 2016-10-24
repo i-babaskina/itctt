@@ -196,7 +196,7 @@ function myformatter(cellvalue, options, rowObject) {
     jQuery.validator.addMethod(
         "money",
         function(value, element) {
-            var isValidMoney = /^\d{0,10}(\.\d{0,3})?$/.test(value);
+            var isValidMoney = /^\d{0,100}(\.\d{0,3})?$/.test(value);
             return this.optional(element) || isValidMoney;
         },
         "Ivalid price value"
@@ -236,7 +236,6 @@ function myformatter(cellvalue, options, rowObject) {
                     data: postData,
                     success: function (data, textStatus, jqXHR) {
                         if (data.success) {
-                            //form.preventDefault();
                             $('#jqList').setGridParam({ url: goodListUrl, datatype: 'json' }).trigger('reloadGrid');
                             $('#newGoodName').val('');
                             $('#newGoodPrice').val('');
@@ -280,7 +279,6 @@ function myformatter(cellvalue, options, rowObject) {
                     data: postData,
                     success: function (data, textStatus, jqXHR) {
                         console.log(data);
-                        //alert("alertindex1");
                         if (data.success) {
                             window.location.replace(indexUrl);
                         }
@@ -290,7 +288,6 @@ function myformatter(cellvalue, options, rowObject) {
                         }
                     },
                     error: function (jqXHR, textStatus, errorThrown) {
-                        //alert("bad");
                         alert(textStatus);
                     }
                 });
@@ -309,7 +306,6 @@ function myformatter(cellvalue, options, rowObject) {
             },
             submitHandler: function (form) {
                 var postData = $(form).serializeArray();
-                //alert('smth');
                 console.log(postData);
                 var name = $('#movementGoodName').html();
                 postData.push({ name: "Name", value: name });
@@ -333,7 +329,6 @@ function myformatter(cellvalue, options, rowObject) {
                         console.log(data)
                         if (data.success) {
                             $("#movementDialog").dialog(opt2).dialog("close");
-                            //form.preventDefault();
                             $('#amount').val('');
                         }
                         else {
@@ -347,7 +342,6 @@ function myformatter(cellvalue, options, rowObject) {
                         alert(textStatus);
                     }
                 });
-                //form.preventDefault();
             }
         });
     });
@@ -378,26 +372,37 @@ function myformatter(cellvalue, options, rowObject) {
         var isNameValid = false, isPriceValid = false;
         $('#' + selectedRowId + "_Name").next().remove();
         $('#' + selectedRowId + "_Name").next().remove();
+        $('#' + selectedRowId + "_Name").next().remove();
+        $('#' + selectedRowId + "_Name").next().remove();
+        $('#' + selectedRowId + "_Price").next().remove();
+        $('#' + selectedRowId + "_Price").next().remove();
         $('#' + selectedRowId + "_Price").next().remove();
         $('#' + selectedRowId + "_Price").next().remove();
         $('#editGoodValidation').remove();
         if (!regexName.test(newName)) {
             $('#' + selectedRowId + "_Name").after('<br><b>Letters, digits, spaces,<br> - and _ only</b>');
-            //$('#' + selectedRowId + "_Price").after('<br>');
+            $('#' + selectedRowId + "_Price").after('<br>&nbsp');
+            $('#' + selectedRowId + "_Price").after('<br>&nbsp');
         }
         else if (newName.length > 50 || newName.length < 1) {
             $('#' + selectedRowId + "_Name").after('<br><b>Length must be betwen 1 <br>and 50 chars</b>');
+            $('#' + selectedRowId + "_Price").after('<br>&nbsp');
+            $('#' + selectedRowId + "_Price").after('<br>&nbsp');
         }
         else if (newName[0] == " ") {
             $('#' + selectedRowId + "_Name").after('<br><b>Name can\'t starts from space</b>');
+            $('#' + selectedRowId + "_Price").after('<br>&nbsp');
         }
         else isNameValid = true;
 
         if (!regexPrice.test(newPrice)) {
             $('#' + selectedRowId + "_Price").after('<br><b>Invalid price format.</b>');
+            $('#' + selectedRowId + "_Name").after('<br>&nbsp');
         }
         else if (parseFloat(newPrice) > 10000 || parseFloat(newPrice) < 0.01) {
             $('#' + selectedRowId + "_Price").after('<br><b>Price must be betwen <br>0.01 and 10000 chars</b>');
+            $('#' + selectedRowId + "_Name").after('<br>&nbsp');
+            $('#' + selectedRowId + "_Name").after('<br>&nbsp');
         }
         else isPriceValid = true;
     
@@ -455,9 +460,6 @@ function myformatter(cellvalue, options, rowObject) {
             type: "POST",
             data: id,
             success: function (data, textStatus, jqXHR) {
-                //alert('success delete');
-                //$('#goodsTable')./*trigger('reloadGrid').*/setGridParam({ url: '/Goods/GoodsList', datatype: 'json', page: 1 }).trigger('reloadGrid');
-                //$("#goodsTable").jqGrid('setGridParam', { datatype: 'json' }).trigger('reloadGrid');
                 $('#jqList').setGridParam({ url: goodListUrl, datatype: 'json'/*, page: 1*/ }).trigger('reloadGrid');
                 $("#dialogDelete").dialog(opt3).dialog("close");
                 $('#refresh_jqList').click();
