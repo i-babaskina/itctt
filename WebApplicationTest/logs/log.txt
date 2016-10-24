@@ -33,3 +33,182 @@ ERROR 2016-10-18 10:30:58,111 790895ms GoodsController        GetGoodDetails    
    в System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
    в System.Int32.Parse(String s)
    в WebApplicationTest.Controllers.GoodsController.GetGoodDetails() в C:\Users\iryna\documents\visual studio 2015\Projects\WebApplicationTest\WebApplicationTest\Controllers\GoodsController.cs:строка 144
+ERROR 2016-10-21 16:16:57,635 243074ms GoodsController        GetGoodDetails     - System.FormatException: Входная строка имела неверный формат.
+   в System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   в System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   в System.Int32.Parse(String s)
+   в WebApplicationTest.Controllers.GoodsController.GetGoodDetails() в C:\Users\iryna\Documents\Visual Studio 2015\Projects\WebApplicationTest\WebApplicationTest\Controllers\GoodsController.cs:строка 149
+ERROR 2016-10-21 16:16:57,846 243286ms GoodsController        GetGoodDetails     - System.FormatException: Входная строка имела неверный формат.
+   в System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   в System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   в System.Int32.Parse(String s)
+   в WebApplicationTest.Controllers.GoodsController.GetGoodDetails() в C:\Users\iryna\Documents\Visual Studio 2015\Projects\WebApplicationTest\WebApplicationTest\Controllers\GoodsController.cs:строка 149
+ERROR 2016-10-21 16:16:58,509 243949ms GoodsController        GetGoodDetails     - System.FormatException: Входная строка имела неверный формат.
+   в System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   в System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   в System.Int32.Parse(String s)
+   в WebApplicationTest.Controllers.GoodsController.GetGoodDetails() в C:\Users\iryna\Documents\Visual Studio 2015\Projects\WebApplicationTest\WebApplicationTest\Controllers\GoodsController.cs:строка 149
+ERROR 2016-10-21 16:17:00,494 245934ms GoodsController        GetGoodDetails     - System.FormatException: Входная строка имела неверный формат.
+   в System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   в System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   в System.Int32.Parse(String s)
+   в WebApplicationTest.Controllers.GoodsController.GetGoodDetails() в C:\Users\iryna\Documents\Visual Studio 2015\Projects\WebApplicationTest\WebApplicationTest\Controllers\GoodsController.cs:строка 149
+ERROR 2016-10-21 16:17:00,677 246117ms GoodsController        GetGoodDetails     - System.FormatException: Входная строка имела неверный формат.
+   в System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   в System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   в System.Int32.Parse(String s)
+   в WebApplicationTest.Controllers.GoodsController.GetGoodDetails() в C:\Users\iryna\Documents\Visual Studio 2015\Projects\WebApplicationTest\WebApplicationTest\Controllers\GoodsController.cs:строка 149
+ERROR 2016-10-21 16:17:01,350 246790ms GoodsController        GetGoodDetails     - System.FormatException: Входная строка имела неверный формат.
+   в System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   в System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   в System.Int32.Parse(String s)
+   в WebApplicationTest.Controllers.GoodsController.GetGoodDetails() в C:\Users\iryna\Documents\Visual Studio 2015\Projects\WebApplicationTest\WebApplicationTest\Controllers\GoodsController.cs:строка 149
+ERROR 2016-10-21 16:17:01,558 246997ms GoodsController        GetGoodDetails     - System.FormatException: Входная строка имела неверный формат.
+   в System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   в System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   в System.Int32.Parse(String s)
+   в WebApplicationTest.Controllers.GoodsController.GetGoodDetails() в C:\Users\iryna\Documents\Visual Studio 2015\Projects\WebApplicationTest\WebApplicationTest\Controllers\GoodsController.cs:строка 149
+ERROR 2016-10-21 16:17:01,948 247388ms GoodsController        GetGoodDetails     - System.FormatException: Входная строка имела неверный формат.
+   в System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   в System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   в System.Int32.Parse(String s)
+   в WebApplicationTest.Controllers.GoodsController.GetGoodDetails() в C:\Users\iryna\Documents\Visual Studio 2015\Projects\WebApplicationTest\WebApplicationTest\Controllers\GoodsController.cs:строка 149
+ERROR 2016-10-21 16:17:02,132 247572ms GoodsController        GetGoodDetails     - System.FormatException: Входная строка имела неверный формат.
+   в System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   в System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   в System.Int32.Parse(String s)
+   в WebApplicationTest.Controllers.GoodsController.GetGoodDetails() в C:\Users\iryna\Documents\Visual Studio 2015\Projects\WebApplicationTest\WebApplicationTest\Controllers\GoodsController.cs:строка 149
+ERROR 2016-10-21 16:17:02,404 247844ms GoodsController        GetGoodDetails     - System.FormatException: Входная строка имела неверный формат.
+   в System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   в System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   в System.Int32.Parse(String s)
+   в WebApplicationTest.Controllers.GoodsController.GetGoodDetails() в C:\Users\iryna\Documents\Visual Studio 2015\Projects\WebApplicationTest\WebApplicationTest\Controllers\GoodsController.cs:строка 149
+ERROR 2016-10-21 16:17:02,756 248196ms GoodsController        GetGoodDetails     - System.FormatException: Входная строка имела неверный формат.
+   в System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   в System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   в System.Int32.Parse(String s)
+   в WebApplicationTest.Controllers.GoodsController.GetGoodDetails() в C:\Users\iryna\Documents\Visual Studio 2015\Projects\WebApplicationTest\WebApplicationTest\Controllers\GoodsController.cs:строка 149
+ERROR 2016-10-21 16:17:03,182 248621ms GoodsController        GetGoodDetails     - System.FormatException: Входная строка имела неверный формат.
+   в System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   в System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   в System.Int32.Parse(String s)
+   в WebApplicationTest.Controllers.GoodsController.GetGoodDetails() в C:\Users\iryna\Documents\Visual Studio 2015\Projects\WebApplicationTest\WebApplicationTest\Controllers\GoodsController.cs:строка 149
+ERROR 2016-10-21 16:17:03,508 248948ms GoodsController        GetGoodDetails     - System.FormatException: Входная строка имела неверный формат.
+   в System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   в System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   в System.Int32.Parse(String s)
+   в WebApplicationTest.Controllers.GoodsController.GetGoodDetails() в C:\Users\iryna\Documents\Visual Studio 2015\Projects\WebApplicationTest\WebApplicationTest\Controllers\GoodsController.cs:строка 149
+ERROR 2016-10-21 16:17:06,357 251797ms GoodsController        GetGoodDetails     - System.FormatException: Входная строка имела неверный формат.
+   в System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   в System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   в System.Int32.Parse(String s)
+   в WebApplicationTest.Controllers.GoodsController.GetGoodDetails() в C:\Users\iryna\Documents\Visual Studio 2015\Projects\WebApplicationTest\WebApplicationTest\Controllers\GoodsController.cs:строка 149
+ERROR 2016-10-21 16:17:08,445 253885ms GoodsController        GetGoodDetails     - System.FormatException: Входная строка имела неверный формат.
+   в System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   в System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   в System.Int32.Parse(String s)
+   в WebApplicationTest.Controllers.GoodsController.GetGoodDetails() в C:\Users\iryna\Documents\Visual Studio 2015\Projects\WebApplicationTest\WebApplicationTest\Controllers\GoodsController.cs:строка 149
+ERROR 2016-10-21 16:17:52,845 298284ms GoodsController        GetGoodDetails     - System.FormatException: Входная строка имела неверный формат.
+   в System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   в System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   в System.Int32.Parse(String s)
+   в WebApplicationTest.Controllers.GoodsController.GetGoodDetails() в C:\Users\iryna\Documents\Visual Studio 2015\Projects\WebApplicationTest\WebApplicationTest\Controllers\GoodsController.cs:строка 149
+ERROR 2016-10-21 17:34:56,565 163373ms GoodsController        GoodsList          - System.NotSupportedException: The method 'Skip' is only supported for sorted input in LINQ to Entities. The method 'OrderBy' must be called before the method 'Skip'.
+   в System.Data.Entity.Core.Objects.ELinq.ExpressionConverter.OrderByLifter.PassthroughOrderByLifter.Skip(DbExpression k)
+   в System.Data.Entity.Core.Objects.ELinq.ExpressionConverter.OrderByLifter.Skip(DbExpressionBinding input, DbExpression skipCount)
+   в System.Data.Entity.Core.Objects.ELinq.ExpressionConverter.Skip(DbExpressionBinding input, DbExpression skipCount)
+   в System.Data.Entity.Core.Objects.ELinq.ExpressionConverter.MethodCallTranslator.SkipTranslator.TranslatePagingOperator(ExpressionConverter parent, DbExpression operand, DbExpression count)
+   в System.Data.Entity.Core.Objects.ELinq.ExpressionConverter.MethodCallTranslator.PagingTranslator.TranslateUnary(ExpressionConverter parent, DbExpression operand, MethodCallExpression call)
+   в System.Data.Entity.Core.Objects.ELinq.ExpressionConverter.MethodCallTranslator.UnarySequenceMethodTranslator.Translate(ExpressionConverter parent, MethodCallExpression call)
+   в System.Data.Entity.Core.Objects.ELinq.ExpressionConverter.MethodCallTranslator.SequenceMethodTranslator.Translate(ExpressionConverter parent, MethodCallExpression call, SequenceMethod sequenceMethod)
+   в System.Data.Entity.Core.Objects.ELinq.ExpressionConverter.MethodCallTranslator.TypedTranslate(ExpressionConverter parent, MethodCallExpression linq)
+   в System.Data.Entity.Core.Objects.ELinq.ExpressionConverter.TypedTranslator`1.Translate(ExpressionConverter parent, Expression linq)
+   в System.Data.Entity.Core.Objects.ELinq.ExpressionConverter.TranslateExpression(Expression linq)
+   в System.Data.Entity.Core.Objects.ELinq.ExpressionConverter.MethodCallTranslator.UnarySequenceMethodTranslator.Translate(ExpressionConverter parent, MethodCallExpression call)
+   в System.Data.Entity.Core.Objects.ELinq.ExpressionConverter.MethodCallTranslator.SequenceMethodTranslator.Translate(ExpressionConverter parent, MethodCallExpression call, SequenceMethod sequenceMethod)
+   в System.Data.Entity.Core.Objects.ELinq.ExpressionConverter.MethodCallTranslator.TypedTranslate(ExpressionConverter parent, MethodCallExpression linq)
+   в System.Data.Entity.Core.Objects.ELinq.ExpressionConverter.TypedTranslator`1.Translate(ExpressionConverter parent, Expression linq)
+   в System.Data.Entity.Core.Objects.ELinq.ExpressionConverter.TranslateExpression(Expression linq)
+   в System.Data.Entity.Core.Objects.ELinq.ExpressionConverter.Convert()
+   в System.Data.Entity.Core.Objects.ELinq.ELinqQueryState.GetExecutionPlan(Nullable`1 forMergeOption)
+   в System.Data.Entity.Core.Objects.ObjectQuery`1.<>c__DisplayClass7.<GetResults>b__6()
+   в System.Data.Entity.Core.Objects.ObjectContext.ExecuteInTransaction[T](Func`1 func, IDbExecutionStrategy executionStrategy, Boolean startLocalTransaction, Boolean releaseConnectionOnSuccess)
+   в System.Data.Entity.Core.Objects.ObjectQuery`1.<>c__DisplayClass7.<GetResults>b__5()
+   в System.Data.Entity.SqlServer.DefaultSqlExecutionStrategy.Execute[TResult](Func`1 operation)
+   в System.Data.Entity.Core.Objects.ObjectQuery`1.GetResults(Nullable`1 forMergeOption)
+   в System.Data.Entity.Core.Objects.ObjectQuery`1.<System.Collections.Generic.IEnumerable<T>.GetEnumerator>b__0()
+   в System.Data.Entity.Internal.LazyEnumerator`1.MoveNext()
+   в System.Collections.Generic.List`1..ctor(IEnumerable`1 collection)
+   в System.Linq.Enumerable.ToList[TSource](IEnumerable`1 source)
+   в WebApplicationTest.DataAccess.DAO.GetAllGoods(Int32 pageNumber, Int32 itemsPerPage)
+   в WebApplicationTest.Controllers.GoodsController.GoodsList(Boolean _search, String nd, String rows, String page, String sord)
+ERROR 2016-10-21 19:11:43,716  3521ms GoodsController        GoodsList          - System.InvalidOperationException: The operation cannot be completed because the DbContext has been disposed.
+   в System.Data.Entity.Internal.LazyInternalContext.InitializeContext()
+   в System.Data.Entity.Internal.Linq.InternalQuery`1.GetEnumerator()
+   в System.Data.Entity.Infrastructure.DbQuery`1.System.Collections.Generic.IEnumerable<TResult>.GetEnumerator()
+   в System.Linq.Buffer`1..ctor(IEnumerable`1 source)
+   в System.Linq.OrderedEnumerable`1.<GetEnumerator>d__1.MoveNext()
+   в System.Linq.Enumerable.<SkipIterator>d__30`1.MoveNext()
+   в System.Linq.Enumerable.Count[TSource](IEnumerable`1 source)
+   в WebApplicationTest.DataAccess.DAO.GetAllGoods(Int32 pageNumber, Int32 itemsPerPage, SortedColumn sortedColumn, Boolean isDescedingSort) в C:\Users\iryna\Documents\Visual Studio 2015\Projects\WebApplicationTest\WebApplicationTest\DataAccess\DAO.cs:строка 38
+   в WebApplicationTest.Controllers.GoodsController.GoodsList(Boolean _search, String nd, String rows, String page, String sidx, String sord) в C:\Users\iryna\Documents\Visual Studio 2015\Projects\WebApplicationTest\WebApplicationTest\Controllers\GoodsController.cs:строка 47
+ERROR 2016-10-21 19:11:51,928 11733ms GoodsController        GoodsList          - System.InvalidOperationException: The operation cannot be completed because the DbContext has been disposed.
+   в System.Data.Entity.Internal.LazyInternalContext.InitializeContext()
+   в System.Data.Entity.Internal.Linq.InternalQuery`1.GetEnumerator()
+   в System.Data.Entity.Infrastructure.DbQuery`1.System.Collections.Generic.IEnumerable<TResult>.GetEnumerator()
+   в System.Linq.Buffer`1..ctor(IEnumerable`1 source)
+   в System.Linq.OrderedEnumerable`1.<GetEnumerator>d__1.MoveNext()
+   в System.Linq.Enumerable.<SkipIterator>d__30`1.MoveNext()
+   в System.Linq.Enumerable.Count[TSource](IEnumerable`1 source)
+   в WebApplicationTest.DataAccess.DAO.GetAllGoods(Int32 pageNumber, Int32 itemsPerPage, SortedColumn sortedColumn, Boolean isDescedingSort) в C:\Users\iryna\Documents\Visual Studio 2015\Projects\WebApplicationTest\WebApplicationTest\DataAccess\DAO.cs:строка 38
+   в WebApplicationTest.Controllers.GoodsController.GoodsList(Boolean _search, String nd, String rows, String page, String sidx, String sord) в C:\Users\iryna\Documents\Visual Studio 2015\Projects\WebApplicationTest\WebApplicationTest\Controllers\GoodsController.cs:строка 47
+ERROR 2016-10-24 10:43:55,753 23870ms GoodsController        llMovementsForGood - System.ArgumentNullException: Значение не может быть неопределенным.
+Имя параметра: source
+   в System.Linq.Enumerable.Count[TSource](IEnumerable`1 source)
+   в WebApplicationTest.DataAccess.DAO.GetMovementsByGoodId(Int32 goodId, Int32& pageNumber, Int32 itemsPerPage, SortedColumn sortedColumn, Boolean isDescedingSort, Int32& movementsCount) в C:\Users\iryna\documents\visual studio 2015\Projects\WebApplicationTest\WebApplicationTest\DataAccess\DAO.cs:строка 141
+   в WebApplicationTest.Controllers.GoodsController.GetAllMovementsForGood(String goodId, Boolean _search, String nd, String rows, String page, String sidx, String sord) в C:\Users\iryna\documents\visual studio 2015\Projects\WebApplicationTest\WebApplicationTest\Controllers\GoodsController.cs:строка 132
+ERROR 2016-10-24 10:44:05,985 34103ms GoodsController        llMovementsForGood - System.ArgumentNullException: Значение не может быть неопределенным.
+Имя параметра: source
+   в System.Linq.Enumerable.Count[TSource](IEnumerable`1 source)
+   в WebApplicationTest.DataAccess.DAO.GetMovementsByGoodId(Int32 goodId, Int32& pageNumber, Int32 itemsPerPage, SortedColumn sortedColumn, Boolean isDescedingSort, Int32& movementsCount) в C:\Users\iryna\documents\visual studio 2015\Projects\WebApplicationTest\WebApplicationTest\DataAccess\DAO.cs:строка 141
+   в WebApplicationTest.Controllers.GoodsController.GetAllMovementsForGood(String goodId, Boolean _search, String nd, String rows, String page, String sidx, String sord) в C:\Users\iryna\documents\visual studio 2015\Projects\WebApplicationTest\WebApplicationTest\Controllers\GoodsController.cs:строка 132
+ERROR 2016-10-24 10:46:59,168 45786ms GoodsController        llMovementsForGood - System.InvalidOperationException: The operation cannot be completed because the DbContext has been disposed.
+   в System.Data.Entity.Internal.LazyInternalContext.InitializeContext()
+   в System.Data.Entity.Internal.Linq.InternalQuery`1.GetEnumerator()
+   в System.Data.Entity.Infrastructure.DbQuery`1.System.Collections.Generic.IEnumerable<TResult>.GetEnumerator()
+   в System.Linq.Buffer`1..ctor(IEnumerable`1 source)
+   в System.Linq.OrderedEnumerable`1.<GetEnumerator>d__1.MoveNext()
+   в System.Linq.Enumerable.<SkipIterator>d__30`1.MoveNext()
+   в System.Linq.Enumerable.<TakeIterator>d__24`1.MoveNext()
+   в System.Collections.Generic.List`1..ctor(IEnumerable`1 collection)
+   в System.Linq.Enumerable.ToList[TSource](IEnumerable`1 source)
+   в WebApplicationTest.DataAccess.DAO.GetMovementsByGoodId(Int32 goodId, Int32& pageNumber, Int32 itemsPerPage, SortedColumn sortedColumn, Boolean isDescedingSort, Int32& movementsCount) в C:\Users\iryna\documents\visual studio 2015\Projects\WebApplicationTest\WebApplicationTest\DataAccess\DAO.cs:строка 185
+   в WebApplicationTest.Controllers.GoodsController.GetAllMovementsForGood(String goodId, Boolean _search, String nd, String rows, String page, String sidx, String sord) в C:\Users\iryna\documents\visual studio 2015\Projects\WebApplicationTest\WebApplicationTest\Controllers\GoodsController.cs:строка 132
+ERROR 2016-10-24 10:49:43,466 210084ms GoodsController        llMovementsForGood - System.InvalidOperationException: The operation cannot be completed because the DbContext has been disposed.
+   в System.Data.Entity.Internal.LazyInternalContext.InitializeContext()
+   в System.Data.Entity.Internal.Linq.InternalQuery`1.GetEnumerator()
+   в System.Data.Entity.Infrastructure.DbQuery`1.System.Collections.Generic.IEnumerable<TResult>.GetEnumerator()
+   в System.Linq.Buffer`1..ctor(IEnumerable`1 source)
+   в System.Linq.OrderedEnumerable`1.<GetEnumerator>d__1.MoveNext()
+   в System.Linq.Enumerable.<SkipIterator>d__30`1.MoveNext()
+   в System.Linq.Enumerable.<TakeIterator>d__24`1.MoveNext()
+   в System.Collections.Generic.List`1..ctor(IEnumerable`1 collection)
+   в System.Linq.Enumerable.ToList[TSource](IEnumerable`1 source)
+   в WebApplicationTest.DataAccess.DAO.GetMovementsByGoodId(Int32 goodId, Int32& pageNumber, Int32 itemsPerPage, SortedColumn sortedColumn, Boolean isDescedingSort, Int32& movementsCount) в C:\Users\iryna\documents\visual studio 2015\Projects\WebApplicationTest\WebApplicationTest\DataAccess\DAO.cs:строка 185
+   в WebApplicationTest.Controllers.GoodsController.GetAllMovementsForGood(String goodId, Boolean _search, String nd, String rows, String page, String sidx, String sord) в C:\Users\iryna\documents\visual studio 2015\Projects\WebApplicationTest\WebApplicationTest\Controllers\GoodsController.cs:строка 132
+ERROR 2016-10-24 11:12:57,464 24458ms GoodsController        llMovementsForGood - System.InvalidOperationException: A specified Include path is not valid. The EntityType 'WebApplicationTest.DataAccess.Movement' does not declare a navigation property with the name 'Goods'.
+   в System.Data.Entity.Core.Objects.Internal.ObjectFullSpanRewriter.ConvertSpanPath(SpanPathInfo parentInfo, List`1 navPropNames, Int32 pos)
+   в System.Data.Entity.Core.Objects.Internal.ObjectFullSpanRewriter..ctor(DbCommandTree tree, DbExpression toRewrite, Span span, AliasGenerator aliasGenerator)
+   в System.Data.Entity.Core.Objects.Internal.ObjectSpanRewriter.TryRewrite(DbQueryCommandTree tree, Span span, MergeOption mergeOption, AliasGenerator aliasGenerator, DbExpression& newQuery, SpanIndex& spanInfo)
+   в System.Data.Entity.Core.Objects.Internal.ObjectQueryExecutionPlanFactory.Prepare(ObjectContext context, DbQueryCommandTree tree, Type elementType, MergeOption mergeOption, Boolean streaming, Span span, IEnumerable`1 compiledQueryParameters, AliasGenerator aliasGenerator)
+   в System.Data.Entity.Core.Objects.ELinq.ELinqQueryState.GetExecutionPlan(Nullable`1 forMergeOption)
+   в System.Data.Entity.Core.Objects.ObjectQuery`1.<>c__DisplayClass7.<GetResults>b__6()
+   в System.Data.Entity.Core.Objects.ObjectContext.ExecuteInTransaction[T](Func`1 func, IDbExecutionStrategy executionStrategy, Boolean startLocalTransaction, Boolean releaseConnectionOnSuccess)
+   в System.Data.Entity.Core.Objects.ObjectQuery`1.<>c__DisplayClass7.<GetResults>b__5()
+   в System.Data.Entity.SqlServer.DefaultSqlExecutionStrategy.Execute[TResult](Func`1 operation)
+   в System.Data.Entity.Core.Objects.ObjectQuery`1.GetResults(Nullable`1 forMergeOption)
+   в System.Data.Entity.Core.Objects.ObjectQuery`1.<System.Collections.Generic.IEnumerable<T>.GetEnumerator>b__0()
+   в System.Data.Entity.Internal.LazyEnumerator`1.MoveNext()
+   в System.Linq.Enumerable.Count[TSource](IEnumerable`1 source)
+   в WebApplicationTest.DataAccess.DAO.GetMovementsByGoodId(Int32 goodId, Int32& pageNumber, Int32 itemsPerPage, SortedColumn sortedColumn, Boolean isDescedingSort, Int32& movementsCount)
+   в WebApplicationTest.Controllers.GoodsController.GetAllMovementsForGood(String goodId, Boolean _search, String nd, String rows, String page, String sidx, String sord)

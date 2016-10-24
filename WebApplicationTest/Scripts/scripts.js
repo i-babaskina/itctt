@@ -72,13 +72,18 @@ $("#showStat").click(function () {
             { name: 'Date', index: 'Date', width: 250, sortable: true, date: true, formatter: myformatter},
             { name: 'Amount', index: 'Amount', width: 100, sortable: true },
         ],
+        jsonReader: {
+            root: 'userdata',
+            id: 'id',
+            repeatitems: false
+        },
         rowNum: 10,
         rowList: [10, 25, 50, 100],
         pager: '#pagerStat',
         sortname: 'Date',
         viewrecords: true,
         sortorder: "desc",
-        loadonce: true,
+        //loadonce: true,
         caption: "Good stats"
     });
     $("#jqStat").jqGrid('setGridParam', {
@@ -91,7 +96,11 @@ $("#statBtnClose").click(function () {
     $("#dialogStat").dialog(opt4).dialog("close");
 });
 
-    function myformatter(cellvalue, options, rowObject) {
+function myformatter(cellvalue, options, rowObject) {
+    //var replaced = cellvalue.replace('/Date(', '').replace(')/', '');
+    //console.log(replaced);
+    //var t = new Date(replaced);
+    //var new_formated_cellvalue = moment(cellvalue);
         new_formated_cellvalue = cellvalue.replace('T', ' ');
         var index = new_formated_cellvalue.lastIndexOf('.');
         if (index > 0)
@@ -103,8 +112,7 @@ $("#statBtnClose").click(function () {
     jQuery("#jqList").jqGrid({
         url: goodListUrl,
         datatype: "json",
-        loadonce: true,
-        colNames: ['Id', 'Name', 'Price'],
+        colNames: ['Id', 'Name', 'Price', 'Amount', 'TotalPrice'],
         colModel: [
             { name: 'Id', index: 'Id', width: 25, sortable: true, hidden: true, editable: true },
             { name: 'Name', index: 'Name', width: 300, sortable: true, editable: true },
@@ -113,13 +121,20 @@ $("#statBtnClose").click(function () {
                 sorttype: function(cell, rowData) {
                     return (parseInt(rowData.Price));
                 }
-            }
+            },
+            { name: 'Amount', index: 'Amount', width: 100, sortable: true, hidden: true, editable: true },
+            { name: 'TotalPrice', index: 'TotalPrice', width: 100, sortable: true, hidden: true, editable: true }
         ],
+        jsonReader: {
+            root: 'userdata',
+            id: 'id',
+            repeatitems: false
+        },
         rowNum: 10,
         rowList: [10, 25, 50, 100],
         pager: '#jqPager',
         pgbuttons: true,
-        sortname: 'id',
+        sortname: 'Id',
         sortorder: "desc",
         onSelectRow: function (id) {
             if (editedRow != -1 && editedRow != parseInt(id)) {
@@ -140,21 +155,23 @@ $("#statBtnClose").click(function () {
             $('#goodName').html(rowData.Name);
             $('#goodPrice').html(rowData.Price);
             $('#movementGoodName').html(rowData.Name);
-            $.ajax(
-            {
-                url: goodDetailsUrl,
-                type: "POST",
-                data: rowData.Id,
-                success: function(data, textStatus, jqXHR) {
-                    //console.log(data);
-                    $('#goodPrice').html(data.Price);
-                    $('#goodAmount').html(data.Amount);
-                    $('#goodAllPrice').html(data.TotalPrice);
-                },
-                error: function(jqXHR, textStatus, errorThrown) {
-                    alert(textStatus);
-                }
-            });
+            $('#goodAmount').html(rowData.Amount);
+            $('#goodAllPrice').html(rowData.TotalPrice);
+            //$.ajax(
+            //{
+            //    url: goodDetailsUrl,
+            //    type: "POST",
+            //    data: rowData.Id,
+            //    success: function(data, textStatus, jqXHR) {
+            //        //console.log(data);
+            //        $('#goodPrice').html(data.Price);
+            //        $('#goodAmount').html(data.Amount);
+            //        $('#goodAllPrice').html(data.TotalPrice);
+            //    },
+            //    error: function(jqXHR, textStatus, errorThrown) {
+            //        alert(textStatus);
+            //    }
+            //});
         },
         editurl: updateGoodUrl,
         caption: "Goods"
@@ -366,6 +383,7 @@ $("#statBtnClose").click(function () {
         $('#editGoodValidation').remove();
         if (!regexName.test(newName)) {
             $('#' + selectedRowId + "_Name").after('<br><b>Letters, digits, spaces,<br> - and _ only</b>');
+            //$('#' + selectedRowId + "_Price").after('<br>');
         }
         else if (newName.length > 50 || newName.length < 1) {
             $('#' + selectedRowId + "_Name").after('<br><b>Length must be betwen 1 <br>and 50 chars</b>');

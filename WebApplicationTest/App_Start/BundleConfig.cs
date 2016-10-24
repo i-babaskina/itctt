@@ -16,11 +16,14 @@ namespace WebApplicationTest
                         "~/Scripts/jquery.validate*"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqGrid").Include(
-                "~/Scripts/i18n/grid.locale-en.js",
-                "~/Scripts/jquery.jqGrid.min.js"));
+                        "~/Scripts/i18n/grid.locale-en.js",
+                        "~/Scripts/jquery.jqGrid.min.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/moment").Include(
+                        "~/Scripts/moment*"));
 
             bundles.Add(new ScriptBundle("~/bundles/scripts").Include(
-                "~/Scripts/scripts.js"));
+                        "~/Scripts/scripts.js"));
 
 
             // Use the development version of Modernizr to develop with and learn from. Then, when you're

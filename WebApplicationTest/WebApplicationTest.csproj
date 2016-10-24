@@ -213,12 +213,15 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\Converters.cs" />
+    <Compile Include="Helpers\CustomJsonResult.cs" />
+    <Compile Include="Helpers\Enums.cs" />
     <Compile Include="Helpers\Results.cs" />
     <Compile Include="Migrations\201610121429594_InitialCreate.cs" />
     <Compile Include="Migrations\201610121429594_InitialCreate.Designer.cs">
       <DependentUpon>201610121429594_InitialCreate.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\GoodDetails.cs" />
     <Compile Include="Models\LoginMyViewModel.cs" />
     <Compile Include="Models\UserContext.cs" />
     <Compile Include="Models\Good.cs" />
@@ -374,6 +377,8 @@
     <Content Include="Scripts\jquery.simulate.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\moment.js" />
+    <Content Include="Scripts\moment.min.js" />
     <Content Include="Scripts\require.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.js" />

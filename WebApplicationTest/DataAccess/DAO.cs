@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using WebApplicationTest.Models;
 using WebApplicationTest.Helpers;
+using static WebApplicationTest.Helpers.Enums;
 
 namespace WebApplicationTest.DataAccess
 {
@@ -13,16 +14,39 @@ namespace WebApplicationTest.DataAccess
         private const String CONSUMPTION = "Consumption";
         private const String MOVEMENTS = "Movements";
 
-        public static List<Good> GetAllGoods()
+        public static List<Good> GetAllGoods(ref Int32 pageNumber, Int32 itemsPerPage, SortedColumn sortedColumn, Boolean isDescedingSort, out Int32 goodsCount)
         {
-            List<Good> goods = new List<Good>();
+            IEnumerable<Good> goods = null;
 
             using (GoodsContext context = new GoodsContext())
             {
-                goods = context.Goods.Include(MOVEMENTS).ToList<Good>();
+                goods = context.Goods;//.Include(MOVEMENTS); 
+                goodsCount = goods.Count();
+
+                if (goodsCount <= (pageNumber-1) * itemsPerPage)
+                {
+                    pageNumber = goodsCount / itemsPerPage + 1;
+                }
+                
+                if (sortedColumn == SortedColumn.Name)
+                {
+                    goods = isDescedingSort ? goods.OrderByDescending(g => g.Name) : goods.OrderBy(g => g.Name);
+                }
+                else if (sortedColumn == SortedColumn.Price)
+                {
+                    goods = isDescedingSort ? goods.OrderByDescending(g => g.Price) : goods.OrderBy(g => g.Price);
+                }
+
+                goods = goods.Skip((pageNumber - 1) * itemsPerPage);
+
+                if (goodsCount >= itemsPerPage)
+                {
+                    goods = goods.Take(itemsPerPage);
+                }
+
+                return goods.ToList<Good>();
             }
 
-            return goods;
         }
 
         public static void AddGood(Good good)
@@ -35,7 +59,7 @@ namespace WebApplicationTest.DataAccess
                     context.SaveChanges();
                 }
             }
-            catch (Exception exeption)
+            catch
             {
                 throw;
             }
@@ -111,15 +135,49 @@ namespace WebApplicationTest.DataAccess
             return true;
         }
 
-        public static List<Movement> GetMovementsByGoodId(Int32 goodId)
+        public static List<Movement> GetMovementsByGoodId(Int32 goodId, ref Int32 pageNumber, Int32 itemsPerPage, SortedColumn sortedColumn, Boolean isDescedingSort, out Int32 movementsCount)
         {
-            List<Movement> result = new List<Movement>();
+            List<Movement> movements = new List<Movement>();
 
             try
             {
                 using (GoodsContext context = new GoodsContext())
                 {
-                    result = context.Set<Movement>().Where(x => x.GoodId == goodId).ToList<Movement>();
+                    IEnumerable<Movement> result = null;
+                    result = context.Movements.Include("Good").Where(x => x.GoodId == goodId);
+                    movementsCount = result.Count();
+
+                    if (movementsCount <= (pageNumber - 1) * itemsPerPage)
+                    {
+                        pageNumber = movementsCount / itemsPerPage + 1;
+                    }
+
+                    if (sortedColumn == SortedColumn.Date)
+                    {
+                        result = isDescedingSort ? result.OrderByDescending(r => r.Date) : result.OrderBy(r => r.Date);
+                    }
+                    else if (sortedColumn == SortedColumn.User)
+                    {
+                        result = isDescedingSort ? result.OrderByDescending(r => r.User) : result.OrderBy(r => r.User);
+                    }
+                    else if (sortedColumn == SortedColumn.Type)
+                    {
+                        result = isDescedingSort ? result.OrderByDescending(r => r.Type) : result.OrderBy(r => r.Type);
+                    }
+                    else if (sortedColumn == SortedColumn.Amount)
+                    {
+                        result = isDescedingSort ? result.OrderByDescending(r => r.Amount) : result.OrderBy(r => r.Amount);
+                    }
+
+                    result = result.Skip((pageNumber - 1) * itemsPerPage);
+
+                    if (movementsCount >= itemsPerPage)
+                    {
+                        result = result.Take(itemsPerPage);
+                    }
+
+                    movements = result.ToList<Movement>();
+
                 }
             }
             catch (Exception exception)
@@ -127,7 +185,7 @@ namespace WebApplicationTest.DataAccess
                 throw;
             }
 
-            return result;
+            return movements;
         }
 
         public static Good GetGoodById(Int32 goodId)

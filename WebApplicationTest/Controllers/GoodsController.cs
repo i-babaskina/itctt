@@ -11,12 +11,15 @@ using WebApplicationTest.Models;
 using Newtonsoft.Json;
 using WebApplicationTest.Helpers;
 using System.Web.Security;
+using static WebApplicationTest.Helpers.Enums;
 
 namespace WebApplicationTest.Controllers
 {
     [Authorize]
     public class GoodsController : Controller
     {
+        private const String DESCENDING = "desc";
+
         readonly log4net.ILog logger = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         public ActionResult Index()
@@ -24,23 +27,44 @@ namespace WebApplicationTest.Controllers
             return View();
         }
 
-        public String GoodsList()
+        [HttpGet]
+        public ActionResult GoodsList(Boolean _search, String nd, String rows, String page, String sidx, String sord)
         {
-            String result = String.Empty;
+            Boolean isDescedingSort = sord == DESCENDING;
+            Int32 pageNumber, itemsPerPage, goodsCount;
+            SortedColumn sortedColumn;
+
+            if (!Int32.TryParse(page, out pageNumber) || !Int32.TryParse(rows, out itemsPerPage) || !Enum.TryParse<SortedColumn>(sidx, out sortedColumn))
+            {
+                return Json(new { success = false, message = "inalid input data." }); //TODO: Change to some Responce error code
+            }
+
+            if (pageNumber < 1)
+            {
+                pageNumber = 1;
+            }
+
+            JsonResult result = new JsonResult();
+
             try
             {
-                List<Good> goods = DAO.GetAllGoods();
-                result = JsonConvert.SerializeObject(goods, new JsonSerializerSettings
-                {
-                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore
-                });
+                List<Good> goods = DAO.GetAllGoods(ref pageNumber, itemsPerPage, sortedColumn, isDescedingSort, out goodsCount);
+
+                Int32 numberOfPages = goodsCount / itemsPerPage + 1;
+                result = Results.JqGridJsonResult(Results.GetGoodsWithDetailsResults(goods), pageNumber, itemsPerPage, sortedColumn, isDescedingSort, numberOfPages, goodsCount);
             }
             catch (Exception e)
             {
                 logger.Error(e.ToString());
-                return Results.SMTH_WRONG;
+                result = Results.ErrorResult();
             }
             return result;
+        }
+
+        
+        public ActionResult GoodsList(Boolean _search, String nd, String rows, String page, String sord)
+        {
+            return GoodsList(_search, nd, rows, page, null, sord);   
         }
 
         public ActionResult AddGood()
@@ -82,20 +106,37 @@ namespace WebApplicationTest.Controllers
             return Json(new { success = true }, JsonRequestBehavior.AllowGet);
         }
 
-        public String GetAllMovementsForGood(String goodId)
+        [HttpGet]
+        public JsonResult GetAllMovementsForGood(String goodId, Boolean _search, String nd, String rows, String page, String sidx, String sord)
         {
-            Int32 Id = Int32.Parse(goodId);
-            String result = String.Empty;
+            Int32 id;
+            Boolean isDescedingSort = sord == DESCENDING;
+            Int32 pageNumber, itemsPerPage, movementsCount;
+            SortedColumn sortedColumn;
+
+            if (!Int32.TryParse(goodId, out id) || !Int32.TryParse(page, out pageNumber) || !Int32.TryParse(rows, out itemsPerPage) || !Enum.TryParse<SortedColumn>(sidx, out sortedColumn))
+            {
+                return Json(new { success = false, message = "inalid input data." }); //TODO: Change to some Responce error code
+            }
+
+            if (pageNumber < 1)
+            {
+                pageNumber = 1;
+            }
+
+
+            JsonResult result = new JsonResult() ;
 
             try
             {
-                List<Movement> goods = DAO.GetMovementsByGoodId(Id);
-                result = JsonConvert.SerializeObject(goods);
+                List<Movement> movements = DAO.GetMovementsByGoodId(id, ref pageNumber, itemsPerPage, sortedColumn, isDescedingSort, out movementsCount).Select(c => { c.Good = null; return c; }).ToList<Movement>();
+                Int32 numberOfPages = movementsCount / itemsPerPage + 1;
+                result = Results.JqGridJsonResult(movements, pageNumber, itemsPerPage, sortedColumn, isDescedingSort, numberOfPages, movementsCount);
             }
             catch (Exception e)
             {
                 logger.Error(e.ToString());
-                result = Results.SMTH_WRONG;
+                result = Results.ErrorResult();
             } 
 
             return result;
@@ -166,24 +207,6 @@ namespace WebApplicationTest.Controllers
                 return Results.ErrorResult();
             }
         }
-
-        public ActionResult GetGoodMovement(String inputId)
-        {
-            Int32 goodId = Int32.Parse(inputId);
-            List<Movement> result = new List<Movement>(); 
-
-            try
-            {
-                result = DAO.GetMovementsByGoodId(goodId);
-            }
-            catch(Exception e)
-            {
-                logger.Error(e.ToString());
-                return Results.ErrorResult();
-            }
-
-            return Json(result);
-        }
-        
+                
     }
 }

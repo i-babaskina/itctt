@@ -15,7 +15,7 @@ namespace WebApplicationTest.Models
         public DateTime Date { get; set; }
         public String User { get; set; }
 
-        [JsonIgnoreAttribute]
+        [JsonIgnore]
         public virtual Good Good { get; set; }
     }
 }
