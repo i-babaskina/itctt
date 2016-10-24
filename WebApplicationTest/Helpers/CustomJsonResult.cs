@@ -10,7 +10,7 @@ namespace WebApplicationTest.Helpers
 {
     public class CustomJsonResult : JsonResult
     {
-        private const String dateFormat = "yyyy-MM-dd HH:mm:ss";
+        private const String DATE_FORMAT = "dd-MM-yyyy HH:mm:ss";
 
         public override void ExecuteResult(ControllerContext context)
         {
@@ -36,7 +36,7 @@ namespace WebApplicationTest.Helpers
             if (Data != null)
             {
                 IsoDateTimeConverter isoConvert = new IsoDateTimeConverter();
-                isoConvert.DateTimeFormat = dateFormat;
+                isoConvert.DateTimeFormat = DATE_FORMAT;
                 response.Write(JsonConvert.SerializeObject(Data, isoConvert));
             }
         }

@@ -84,7 +84,7 @@ namespace WebApplicationTest.Helpers
         {
             if (String.IsNullOrEmpty(date))
             {
-                throw new NullReferenceException("Input date is null or empty");
+                throw new NullReferenceException("Input date is null or empty.");
             }
             if (date.IndexOf(DATETIME_SEPARATOR) == -1)
             {
